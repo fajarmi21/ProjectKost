@@ -77,6 +77,7 @@
                                                                             action="{{ route('admin.konfirmasi', $data->id) }}"
                                                                             method="POST" enctype="multipart/form-data">
                                                                             @csrf
+                                                                            <input type="hidden" name="bulan" value="{{ $data->bulan }}">
                                                                             <button type="submit" id="status"
                                                                                 name="status" value="Ditolak"
                                                                                 class="btn btn-danger">Tolak</button>
