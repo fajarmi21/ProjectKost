@@ -138,8 +138,7 @@
                     <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
                         <i class="bi bi-card-checklist"></i>
                         <h4><a href="#">Booking Langsung</a></h4>
-                        <p>Bisa langsung mengajukan sewa kos bahkan, kamu bisa mulai sewa kos dari 3 bulan sebelum masuk
-                            kosan. Transaksi lebih aman, tanpa takut kamarnya penuh keduluan orang lain.</p>
+                        <p>Bisa langsung mengajukan sewa kos bahkan, Transaksi lebih aman, tanpa takut kamarnya penuh keduluan orang lain.</p>
                     </div>
                 </div>
                 <div class="col-md-6 mt-4 mt-md-0">

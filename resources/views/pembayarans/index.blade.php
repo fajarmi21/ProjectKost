@@ -28,7 +28,6 @@
                                                     <th scope='col'>No</th>
                                                     <th scope='col'>Nama Pelanggan</th>
                                                     <th scope='col'>Tanggal Transfer</th>
-                                                    <th scope='col'>Tanggal Pembayaran</th>
                                                     <th scope='col'>Bulan</th>
                                                     <th scope='col'>Status Pembayaran</th>
                                                     <th scope="col">Aksi</th>
@@ -42,7 +41,6 @@
                                                     <th scope='row'>{{$no}}</th>
                                                     <td>{{$data->nama_penyewa}}</td>
                                                     <td>{{$data->created_at}}</td>
-                                                    <td>{{$data->updated_at}}</td>
                                                     <td>{{$data->bulan}}</td>
                                                     <td>{{$data->status_bayar}}</td>
                                                     <td>
