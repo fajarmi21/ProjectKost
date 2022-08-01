@@ -10,17 +10,21 @@ use App\Models\Kost;
 use App\Models\Pembayaran;
 use App\Models\Seleksi;
 use App\Models\User;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        Carbon::useMonthsOverflow(false);
         if (Auth::user()->role_id == '6') {
             $pembayaran = Pembayaran::where('user_id', Auth::user()->id)
             ->whereNotIn('status_bayar', ['Menunggu Konfirmasi', 'Sudah Transfer'])
             ->orderBy('id', 'DESC')
             ->first();
-            return view('beranda.index', ['pembayaran' => $pembayaran]);
+            $time = Pembayaran::where('user_id', Auth::user()->id)->select('tgl_bayar')->latest()->limit(1)->first();
+            // dd(Carbon::parse($time->tgl_bayar)->addMonth(1)->toDateString());
+            return view('beranda.index', ['pembayaran' => $pembayaran, 'time' => Carbon::parse($time->tgl_bayar)->addMonth(1)->toDateString()]);
         } elseif (Auth::user()->role_id == '5') {
             $penyewa = Penyewa::where('status', 'sewa')->count();
             $pengunjung = Penyewa::where('status', 'belum')->count();

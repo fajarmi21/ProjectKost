@@ -524,6 +524,7 @@
         function CountDownTimer(dt, id)
         {
             var end = new Date(dt);
+            var timeEnd = new Date('{{$time}}');
             var _second = 1000;
             var _minute = _second * 60;
             var _hour = _minute * 60;
@@ -564,7 +565,7 @@
                         document.getElementById(id).innerHTML += hours + ' jam ';
                         document.getElementById(id).innerHTML += minutes + ' menit ';
                         document.getElementById(id).innerHTML += seconds + ' detik';
-                        document.getElementById(id).innerHTML += '<p>Tanggal : '+end.toLocaleDateString('id')+'</p>';
+                        document.getElementById(id).innerHTML += '<p>Tanggal bayar : '+end.toLocaleDateString('id')+'</p>';document.getElementById(id).innerHTML += '<p>Tanggal berakhir : '+timeEnd.toLocaleDateString('id')+'</p>';
                     }
                 }
             }
