@@ -45,7 +45,7 @@
                                                 <tr>
                                                     <th scope='row'>{{$no}}</th>
                                                     <td>
-                                                        @if ($data->status == 'Diterima')
+                                                        @if ($data->status == 'Diterima' || $data->status == 'Menunggu Konfirmasi' || $data->status == 'Sudah Transfer')
                                                             {{Carbon\Carbon::now()->month($data->bulan)->isoFormat('MMMM')}}
                                                         @endif
                                                     </td>
