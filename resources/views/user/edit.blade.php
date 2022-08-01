@@ -1,0 +1,76 @@
+<!-- menampilkan berdasarkan file index di folder layouts  -->
+@extends('layouts.index')
+<!-- section untu title  -->
+@section('title', 'Tambah Data User')
+<!-- section untuk content  -->
+@section('content')
+
+<main id="main">
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Input Data User</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <div class="row">
+                            <div class="col-md-12 col-lg-8 entries">
+                                @csrf
+                                <article class="entry">
+                                    <form action="{{route('user.store')}}" method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="position-relative form-group">
+                                                    <label for="name" style="font-weight: bold;">Nama</label>
+                                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan Nama" required>
+                                                </div>
+                                                <div class="position-relative form-group">
+                                                    <label for="name" style="font-weight: bold;">Email</label>
+                                                    <input type="text" class="form-control" id="email" name="email" placeholder="Masukan Email" required>
+                                                </div>
+                                                <div class="position-relative form-group">
+                                                    <label for="name" style="font-weight: bold;">Role</label>
+                                                    <select class="form-control" name="role">
+                                                    <option value="" selected>Pilih Role</option>
+                                                    @foreach($roles as $data)
+                                                    <option value="{{ $data->name }}">{{ $data->display_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"><i class="pe-7s-diskette"></i> Simpan Data</button>
+                                    </form>
+                                </article>
+                            </div><!-- End blog entries list -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Blog Section -->
+
+</main>
+<!-- End #main -->
+@endsection
+@section('script')
+<script>
+    function previewbukti(input) {
+        var file = $("input[type=file]").get(0).files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                $('#previewbukti').attr("src", reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+@endsection
