@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use PDF;
+
 class PembayaranController extends Controller
 {
     /**
@@ -23,15 +24,15 @@ class PembayaranController extends Controller
     {
         if (Auth::user()->role_id == '6') {
             $pembayaran = Pembayaran::where('user_id', Auth::user()->id)
-            ->Where('status_bayar', '!=', 'Diterima(Booking)')->get();
+                ->Where('status_bayar', '!=', 'Diterima(Booking)')->get();
             $ids = Pembayaran::where('user_id', Auth::user()->id)->latest('tenggat')->latest()->limit(1)->first();
             // dd($ids);
             return view('pembayaran.index', compact('pembayaran', 'ids'));
         } elseif (Auth::user()->role_id == '1') {
             $pembayaran = Pembayaran::where('status_bayar', 'Diterima')
-            ->orWhere('status_bayar', 'Sudah Transfer')
-            ->orwhere('status_bayar', 'Ditolak')
-            ->orwhere('status_bayar', 'Menunggu Konfirmasi')->get();
+                ->orWhere('status_bayar', 'Sudah Transfer')
+                ->orwhere('status_bayar', 'Ditolak')
+                ->orwhere('status_bayar', 'Menunggu Konfirmasi')->get();
             return view('pembayarans.index', ['pembayaran' => $pembayaran]);
         }
     }
@@ -41,27 +42,27 @@ class PembayaranController extends Controller
         $no = random_int(100000, 999999);
         $nama = Auth::user()->name;
         $pembayaran = Pembayaran::join('kost', 'kost.id', '=', 'pembayaran.kost_id')
-        ->where('pembayaran.id', $id)
-        ->select('pembayaran.*', 'kost.nama_kost')->first();
+            ->where('pembayaran.id', $id)
+            ->select('pembayaran.*', 'kost.nama_kost')->first();
 
         // $fasilitas = PFasilitas::join(fasilitas, 'fasilitas.id', '=', 'p_fasilitas.id_fasilitas')
         //     ->where('p_fasilitas.id_pembayaran', $id)
         //     ->select('p_fasilitas.id_pembayaran', 'fasilitas.fasilitas', 'fasilitas.harga')->get();
         // $cek = Pembayaran::find($id);
-            // if (empty($cek->fas_id)) {
-            //     $pembayaran = Pembayaran::join('kost','kost.id','=','pembayaran.kost_id')
-            //     ->where('pembayaran.id',$cek->id)
-            //     ->select('pembayaran.*', 'kost.nama_kost')->first();
-            // } else {
-            //     $pembayaran = Pembayaran::join('kost','kost.id','=','pembayaran.kost_id')
-            //     ->join('fasilitas','fasilitas.id','=','pembayaran.fas_id')
-            //     ->join('p_fasilitas', 'fasilitas.id', '=', 'pembayaran.fas_id')
-            //     ->where('pembayaran.id',$cek->id)
-            //     ->select('pembayaran.*', 'kost.nama_kost','fasilitas.fasilitas','fasilitas.harga')->first();
-            // }
-        $customPaper = array(0, 0,155.90551181,250.92913386);
-        $pdf = PDF::loadview('pembayaran.cetak',['no' => $no, 'nama' => $nama,'pembayaran' => $pembayaran])->setPaper($customPaper,'portrait');
-        return $pdf->download('Nota Pembayaran '.$nama.' Bulan '.$pembayaran->bulan.'.pdf');
+        // if (empty($cek->fas_id)) {
+        //     $pembayaran = Pembayaran::join('kost','kost.id','=','pembayaran.kost_id')
+        //     ->where('pembayaran.id',$cek->id)
+        //     ->select('pembayaran.*', 'kost.nama_kost')->first();
+        // } else {
+        //     $pembayaran = Pembayaran::join('kost','kost.id','=','pembayaran.kost_id')
+        //     ->join('fasilitas','fasilitas.id','=','pembayaran.fas_id')
+        //     ->join('p_fasilitas', 'fasilitas.id', '=', 'pembayaran.fas_id')
+        //     ->where('pembayaran.id',$cek->id)
+        //     ->select('pembayaran.*', 'kost.nama_kost','fasilitas.fasilitas','fasilitas.harga')->first();
+        // }
+        $customPaper = array(0, 0, 155.90551181, 250.92913386);
+        $pdf = PDF::loadview('pembayaran.cetak', ['no' => $no, 'nama' => $nama, 'pembayaran' => $pembayaran])->setPaper($customPaper, 'portrait');
+        return $pdf->download('Nota Pembayaran ' . $nama . ' Bulan ' . $pembayaran->bulan . '.pdf');
     }
 
     /**
@@ -75,27 +76,27 @@ class PembayaranController extends Controller
         if (empty($cek->fas_id)) {
             $Idfasilitas = [];
             $pembayaran =  DB::table('pembayaran')
-            ->join('kost','kost.id','=','pembayaran.kost_id')
-            ->where('pembayaran.id', $cek->id)
-            ->select('pembayaran.*','kost.nama_kost')->first();
+                ->join('kost', 'kost.id', '=', 'pembayaran.kost_id')
+                ->where('pembayaran.id', $cek->id)
+                ->select('pembayaran.*', 'kost.nama_kost')->first();
             $fasilitas = Fasilitas::all();
             $user = User::all();
             $kost = Kost::all();
-            return view('pembayaran.create', compact('user','pembayaran','kost','fasilitas','Idfasilitas'));
+            return view('pembayaran.create', compact('user', 'pembayaran', 'kost', 'fasilitas', 'Idfasilitas'));
         } else {
             $Idfasilitas = [];
             $pembayaran =  DB::table('pembayaran')
-            ->join('fasilitas','fasilitas.id','=','pembayaran.fas_id')
-            ->join('kost','kost.id','=','pembayaran.kost_id')
-            ->where('pembayaran.id', $cek->id)
-            ->select('pembayaran.*','fasilitas.harga','fasilitas.fasilitas','kost.nama_kost')->first();
+                ->join('fasilitas', 'fasilitas.id', '=', 'pembayaran.fas_id')
+                ->join('kost', 'kost.id', '=', 'pembayaran.kost_id')
+                ->where('pembayaran.id', $cek->id)
+                ->select('pembayaran.*', 'fasilitas.harga', 'fasilitas.fasilitas', 'kost.nama_kost')->first();
             $fasilitas = Fasilitas::all();
             $user = User::all();
             $kost = Kost::all();
             foreach (listsFasilitas($pembayaran->tgl_bayar) as $key) {
                 $Idfasilitas[] = $key->fas_id;
             }
-            return view('pembayaran.create', compact('user','pembayaran','kost','fasilitas','Idfasilitas'));
+            return view('pembayaran.create', compact('user', 'pembayaran', 'kost', 'fasilitas', 'Idfasilitas'));
         }
     }
 
@@ -108,7 +109,8 @@ class PembayaranController extends Controller
     public function store(Request $request)
     {
         $fas = $request->fas;
-        for ($i=0; $i < $request->bulan; $i++) {
+        for ($i = 0; $i < $request->bulan; $i++) {
+            Carbon::useMonthsOverflow(false);
             $pembayaran = new Pembayaran;
             $pembayaran->user_id = $request->user_id;
             $pembayaran->kost_id = $request->kost_id;
@@ -117,10 +119,10 @@ class PembayaranController extends Controller
             $pembayaran->tgl_booking = $request->tgl_booking;
             $pembayaran->status_bayar = "Menunggu Konfirmasi";
             $pembayaran->tgl_bayar = Carbon::now()->toDateString();
-            $pembayaran->bulan = Carbon::now()->addRealMonth($i)->isoFormat('MMMM');
+            $pembayaran->bulan = Carbon::now()->addMonth($i)->isoFormat('MMMM');
             $pembayaran->save();
             foreach ($fas as $key => $value) {
-                if($value != "0" ) {
+                if ($value != "0") {
                     $idx[] = PFasilitas::insertGetId([
                         'id_pembayaran' => $pembayaran->id,
                         'id_fasilitas' => $key
@@ -153,9 +155,10 @@ class PembayaranController extends Controller
         //         ]);
         //     }
         // }
+        // dd('x');
         $pembayaran = Pembayaran::where(['user_id' => $request->user_id, 'status_bayar' => 'Menunggu Konfirmasi'])->groupBy('user_id')->select('pembayaran.*', DB::raw('group_concat(pembayaran.bulan) as bulan'))->first();
         // dd($pembayaran);
-        return redirect()->route('pembayaran.show', $pembayaran )->with('toast_success', 'Segera Lakukan Pembayaran!!');
+        return redirect()->route('pembayaran.show', $pembayaran)->with('toast_success', 'Segera Lakukan Pembayaran!!');
     }
 
     /**
@@ -169,36 +172,36 @@ class PembayaranController extends Controller
         if (Auth::user()->role_id == '6') {
             $cek = Pembayaran::find($id);
             if (empty($cek->fas_id)) {
-                $pembayaran = Pembayaran::join('kost','kost.id','=','pembayaran.kost_id')
-                ->where('pembayaran.id',$cek->id)
-                ->select('pembayaran.*', 'kost.nama_kost')->first();
+                $pembayaran = Pembayaran::join('kost', 'kost.id', '=', 'pembayaran.kost_id')
+                    ->where('pembayaran.id', $cek->id)
+                    ->select('pembayaran.*', 'kost.nama_kost')->first();
             } else {
-                $pembayaran = Pembayaran::join('kost','kost.id','=','pembayaran.kost_id')
-                ->join('fasilitas','fasilitas.id','=','pembayaran.fas_id')
-                ->where('pembayaran.id',$cek->id)
-                ->select('pembayaran.*', 'kost.nama_kost','fasilitas.fasilitas','fasilitas.harga')->first();
+                $pembayaran = Pembayaran::join('kost', 'kost.id', '=', 'pembayaran.kost_id')
+                    ->join('fasilitas', 'fasilitas.id', '=', 'pembayaran.fas_id')
+                    ->where('pembayaran.id', $cek->id)
+                    ->select('pembayaran.*', 'kost.nama_kost', 'fasilitas.fasilitas', 'fasilitas.harga')->first();
             }
-            return view('pembayaran.show', compact('pembayaran','cek'));
+            return view('pembayaran.show', compact('pembayaran', 'cek'));
         } elseif (Auth::user()->role_id == '1') {
             $cek = Pembayaran::find($id);
             if (empty($cek->fas_id)) {
-                $pembayaran = Pembayaran::join('kost','kost.id','=','pembayaran.kost_id')
-                ->where('pembayaran.id',$cek->id)
-                ->select('pembayaran.*', 'kost.nama_kost')->first();
+                $pembayaran = Pembayaran::join('kost', 'kost.id', '=', 'pembayaran.kost_id')
+                    ->where('pembayaran.id', $cek->id)
+                    ->select('pembayaran.*', 'kost.nama_kost')->first();
             } else {
-                $pembayaran = Pembayaran::join('kost','kost.id','=','pembayaran.kost_id')
-                ->join('fasilitas','fasilitas.id','=','pembayaran.fas_id')
-                ->where('pembayaran.id',$cek->id)
-                ->select('pembayaran.*', 'kost.nama_kost','fasilitas.fasilitas','fasilitas.harga')->first();
+                $pembayaran = Pembayaran::join('kost', 'kost.id', '=', 'pembayaran.kost_id')
+                    ->join('fasilitas', 'fasilitas.id', '=', 'pembayaran.fas_id')
+                    ->where('pembayaran.id', $cek->id)
+                    ->select('pembayaran.*', 'kost.nama_kost', 'fasilitas.fasilitas', 'fasilitas.harga')->first();
             }
-            return view('pembayaran.show', compact('pembayaran','cek'));
+            return view('pembayaran.show', compact('pembayaran', 'cek'));
         }
     }
 
     public function showbulan($bln)
     {
-        $pembayaran = Pembayaran::where('bulan',$bln)->paginate();
-        return view('pembayarans.bulan',compact('pembayaran'));
+        $pembayaran = Pembayaran::where('bulan', $bln)->paginate();
+        return view('pembayarans.bulan', compact('pembayaran'));
     }
 
     /**
@@ -209,12 +212,12 @@ class PembayaranController extends Controller
      */
     public function edit($id)
     {
-        $pembayaran = Pembayaran::join('fasilitas','fasilitas.id', '=', 'pembayaran.fas_id')
-        ->where('pembayaran.id',$id)
-        ->select('pembayaran.*', 'fasilitas.fasilitas', 'fasilitas.harga')->first();
+        $pembayaran = Pembayaran::join('fasilitas', 'fasilitas.id', '=', 'pembayaran.fas_id')
+            ->where('pembayaran.id', $id)
+            ->select('pembayaran.*', 'fasilitas.fasilitas', 'fasilitas.harga')->first();
         $user = User::all();
         $fasilitas = Fasilitas::all();
-        return view('pembayaran.edit', ['pembayaran' => $pembayaran, 'user' => $user,'fasilitas' => $fasilitas]);
+        return view('pembayaran.edit', ['pembayaran' => $pembayaran, 'user' => $user, 'fasilitas' => $fasilitas]);
     }
 
     /**
@@ -258,31 +261,31 @@ class PembayaranController extends Controller
     {
         if ($request->status == 'Ditolak') {
             Pembayaran::where('id', $id)
-            ->update([
-                'status_bayar' => $request->status
-            ]);
+                ->update([
+                    'status_bayar' => $request->status
+                ]);
             return redirect('/pembayaran')->with('toast_danger', 'Pembayaran Ditolak!');
         } elseif ($request->status == 'Diterima(Booking)') {
             Pembayaran::where('id', $id)
-            ->update([
-                'status_bayar' => $request->status
-            ]);
+                ->update([
+                    'status_bayar' => $request->status
+                ]);
             return redirect('/booking')->with('toast_success', 'Booking Diterima!');
         } elseif ($request->status == 'Ditolak(Booking)') {
             Pembayaran::where('id', $id)
-            ->update([
-                'status_bayar' => $request->status
-            ]);
+                ->update([
+                    'status_bayar' => $request->status
+                ]);
             return redirect('/booking')->with('toast_danger', 'Booking Ditolak!');
         } else {
             $tgl_bayar = Carbon::now();
             Pembayaran::where('id', $id)
-            ->update([
-                'status_bayar' => $request->status,
-                'tgl_bayar' => $tgl_bayar->toDateString(),
-                // 'bulan' => $tgl_bayar->isoFormat('MMMM'),
-                'tenggat' => $tgl_bayar->addMonth()->toDateString()
-            ]);
+                ->update([
+                    'status_bayar' => $request->status,
+                    'tgl_bayar' => $tgl_bayar->toDateString(),
+                    // 'bulan' => $tgl_bayar->isoFormat('MMMM'),
+                    'tenggat' => $tgl_bayar->addMonth()->toDateString()
+                ]);
             return redirect('/pembayaran')->with('toast_success', 'Pembayaran Diterima!');
         }
     }
