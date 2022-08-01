@@ -29,7 +29,7 @@
                     <div class="col-md-12 col-lg-8 entries">
                         @csrf
                         <article class="entry">
-                            <h5 class="mt-1">Fasilitas</h5>
+                            <h5 class="mt-1">Fasilitas Kamar</h5>
                             <p>{{$kost->fasilitas}}</p>
                             <h5>Keterangan</h5>
                             <p>{{$kost->keterangan}}</p>
@@ -37,6 +37,21 @@
                             <p>{{$kost->kategori_kost}}</p>
                             <h5>Biaya Sewa</h5>
                             <p>{{$kost->harga}}</p>
+                            <h5>Fasilitas Umum</h5>
+                            <li>WiFi</li>
+                            <li>R. Tamu</li>
+                            <li>R. Jemur</li>
+                            <h5>Fasilitas Parkir</h5>
+                            <li>Parkir Mobil</li>
+                            <li>Parkir Motor</li>
+                            <h5>Fasilitas kamar mandi</h5>
+                            <p>Kamar mandi luar, kloset duduk</p>
+                            <h5>Peraturan:</h5>
+                            <li>Tamu menginap dikenakan biaya</li>
+                            <li>Tambah biaya untuk alat elektronik</li>
+                            <li>Lawan jenis dilarang ke kamar</li>
+                            <li>Dilarang merokok di kamar</li>
+
                         </article>
                         <a href="/booking/pesan/{{$kost->id}}" class="col-md-12 btn btn-primary">Booking</a>
                     </div><!-- End blog entries list -->
