@@ -541,7 +541,7 @@
                 document.getElementById(id).innerHTML = end.toLocaleDateString('id');
                 document.getElementById(id).innerHTML = '<blockquote><p>Mohon maaf Anda belum membayar, jika dalam waktu 3 bulan belum melakukan pembayaran maka akan dikeluarkan dari kost. Terima Kasih</p></blockquote>';
                 return;
-            } else if (mathdistance < 7) {
+            } else if (mathdistance < 3) {
                 var days = Math.floor(distance / _day);
                 var hours = Math.floor((distance % _day) / _hour);
                 var minutes = Math.floor((distance % _hour) / _minute);
