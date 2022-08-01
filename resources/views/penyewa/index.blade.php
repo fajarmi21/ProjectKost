@@ -33,7 +33,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @php $no = 0; @endphp
+                                                @php
+                                                    Carbon\Carbon::useMonthsOverflow(false);
+                                                    $no = 0;
+                                                @endphp
                                                 @foreach($kamar as $data)
                                                 @php $no++; @endphp
                                                 <tr>
@@ -45,7 +48,7 @@
                                                     @elseif($data->status_bayar == 'Diterima(Booking)' || $data->status_bayar == 'Booking')
                                                     <td>Booking ({{ date('d-m-Y', strtotime($data->tgl_bayar. ' + 1 weeks')) }})</td>
                                                     @else
-                                                    <td>{{ $data->status_bayar }} ({{ date('d-m-Y', strtotime($data->tgl_bayar. ' + 1 weeks')) }})</td>
+                                                    <td>{{ $data->status_bayar }} ({{ Carbon\Carbon::now()->month($data->bulan)->addMonth(1)->format('d-m-Y') }})</td>
                                                     @endif
                                                     <td>
                                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('penyewa.destroy', $data->user_id) }}" method="POST">
