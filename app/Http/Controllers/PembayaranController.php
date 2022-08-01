@@ -119,7 +119,7 @@ class PembayaranController extends Controller
             $pembayaran->tgl_booking = $request->tgl_booking;
             $pembayaran->status_bayar = "Menunggu Konfirmasi";
             $pembayaran->tgl_bayar = Carbon::now()->toDateString();
-            $pembayaran->bulan = Carbon::now()->addMonth($i)->isoFormat('MMMM');
+            $pembayaran->bulan = Carbon::now()->addMonth($i)->isoFormat('MM');
             $pembayaran->save();
             foreach ($fas as $key => $value) {
                 if ($value != "0") {

@@ -41,30 +41,48 @@
                                                     <th scope='row'>{{$no}}</th>
                                                     <td>{{$data->nama_penyewa}}</td>
                                                     <td>{{$data->created_at}}</td>
-                                                    <td>{{$data->bulan}}</td>
+                                                    <td>
+                                                        @if (!empty($data->bulan))
+                                                        {{Carbon\Carbon::now()->month($data->bulan)->isoFormat('MMMM')}}
+                                                        @endif
+                                                    </td>
                                                     <td>{{$data->status_bayar}}</td>
                                                     <td>
-                                                        <a href="/pembayaran/{{$data->id}}" class="btn btn-info"><i class=" fas fa-file"></i> Detail</a>
+                                                        <a href="/pembayaran/{{$data->id}}" class="btn btn-info"><i
+                                                                class=" fas fa-file"></i> Detail</a>
                                                         @if($data->status_bayar != 'Diterima')
-                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-default{{ $data->id }}">
+                                                        <button type="button" class="btn btn-primary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modal-default{{ $data->id }}">
                                                             Konfirmasi
                                                         </button>
                                                         <div class="modal fade" id="modal-default{{ $data->id }}">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h4 class="modal-title">Konfirmasi Pembayaran {{$data->nama_penyewa}}</h4>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        <h4 class="modal-title">Konfirmasi Pembayaran
+                                                                            {{$data->nama_penyewa}}</h4>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <img src="{{url('/images')}}/{{$data->bukti}}" class="img-fluid" alt="">
+                                                                        <img src="{{url('/images')}}/{{$data->bukti}}"
+                                                                            class="img-fluid" alt="">
                                                                     </div>
                                                                     <div class="modal-footer justify-content-between">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                                                        <form action="{{ route('admin.konfirmasi', $data->id) }}" method="POST" enctype="multipart/form-data">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Tutup</button>
+                                                                        <form
+                                                                            action="{{ route('admin.konfirmasi', $data->id) }}"
+                                                                            method="POST" enctype="multipart/form-data">
                                                                             @csrf
-                                                                            <button type="submit" id="status" name="status" value="Ditolak" class="btn btn-danger">Tolak</button>
-                                                                            <button type="submit" id="status" name="status" value="Diterima" class="btn btn-success">Konfirmasi</button>
+                                                                            <button type="submit" id="status"
+                                                                                name="status" value="Ditolak"
+                                                                                class="btn btn-danger">Tolak</button>
+                                                                            <button type="submit" id="status"
+                                                                                name="status" value="Diterima"
+                                                                                class="btn btn-success">Konfirmasi</button>
                                                                         </form>
                                                                     </div>
                                                                 </div>

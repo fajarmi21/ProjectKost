@@ -38,7 +38,8 @@
         <table>
             @php
             $harga_kost = $pembayaran->kost->harga;
-            $total_fasilitas = $total_biaya = 0;
+            $total_biaya = 0;
+            $total_biaya += $harga_kost;
             @endphp
             <tr>
                 <td>
@@ -62,7 +63,7 @@
                 <td>
                     Bulan
                 </td>
-                <td>: {{$pembayaran->bulan}}</td>
+                <td>: {{Carbon\Carbon::now()->month($pembayaran->bulan)->isoFormat('MMMM')}}</td>
             </tr>
             <tr>
                 <td>Detail Pembayaran:</td>

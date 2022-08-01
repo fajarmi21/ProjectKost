@@ -523,7 +523,7 @@
 
     function CountDownTimer(dt, id) {
         var end = new Date(dt);
-        var timeEnd = new Date('{{$time}}');
+        var timeEnd = new Date('{{ Carbon\Carbon::now()->month($time->bulan)->addMonth(1)->toDateString() }}');
         var _second = 1000;
         var _minute = _second * 60;
         var _hour = _minute * 60;
@@ -565,8 +565,7 @@
                     document.getElementById(id).innerHTML += hours + ' jam ';
                     document.getElementById(id).innerHTML += minutes + ' menit ';
                     document.getElementById(id).innerHTML += seconds + ' detik';
-                    document.getElementById(id).innerHTML += '<p>Silahkan melakukan pembayaran untuk bulan selanjutnya sebelum tanggal : ' + end.toLocaleDateString('id') + '</p>';
-
+                    document.getElementById(id).innerHTML += '<br>Silahkan melakukan pembayaran untuk bulan selanjutnya sebelum tanggal : ' + end.toLocaleDateString('id') + '<br>Batas berakhir sewa pada tanggal : ' + timeEnd.toLocaleDateString('id');
                 }
             }
         }

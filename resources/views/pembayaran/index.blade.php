@@ -44,7 +44,7 @@
                                                 @php $no++; @endphp
                                                 <tr>
                                                     <th scope='row'>{{$no}}</th>
-                                                    <td>{{$data->bulan}}</td>
+                                                    <td>{{Carbon\Carbon::now()->month($data->bulan)->isoFormat('MMMM')}}</td>
                                                     <td>{{$data->status_bayar}}</td>
                                                     <td>
                                                         @if (status($data->status_bayar))

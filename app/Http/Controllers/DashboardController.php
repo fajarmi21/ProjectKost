@@ -16,15 +16,17 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        Carbon::useMonthsOverflow(false);
+        // Carbon::useMonthsOverflow(false);
         if (Auth::user()->role_id == '6') {
             $pembayaran = Pembayaran::where('user_id', Auth::user()->id)
             ->whereNotIn('status_bayar', ['Menunggu Konfirmasi', 'Sudah Transfer'])
             ->orderBy('id', 'DESC')
             ->first();
-            $time = Pembayaran::where('user_id', Auth::user()->id)->select('tgl_bayar')->latest()->limit(1)->first();
-            // dd(Carbon::parse($time->tgl_bayar)->addMonth(1)->toDateString());
-            return view('beranda.index', ['pembayaran' => $pembayaran, 'time' => Carbon::parse($time->tgl_bayar)->addMonth(1)->toDateString()]);
+            $time = Pembayaran::where('user_id', Auth::user()->id)->select('bulan', 'tgl_bayar')->orderBy('id', 'DESC')->limit(1)->first();
+            // dump(Carbon::now()->setMonths(8)->toDateString());
+            // dump(Carbon::now()->month(10)->month);
+            // dd(date('mm', strtotime($time->bulan)));
+            return view('beranda.index', ['pembayaran' => $pembayaran, 'time' => $time]);
         } elseif (Auth::user()->role_id == '5') {
             $penyewa = Penyewa::where('status', 'sewa')->count();
             $pengunjung = Penyewa::where('status', 'belum')->count();

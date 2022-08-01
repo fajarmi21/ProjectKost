@@ -21,7 +21,7 @@
                         <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Nama Pelanggan: </b>{{$pembayaran->nama_penyewa}}</p>
                         <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Kamar yang ditempati: </b>{{$pembayaran->nama_kost}}</p>
                         <!-- <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Tanggal Bayar: </b>{{$pembayaran->tgl_bayar}}</p> -->
-                        <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Pembayaran untuk bulan: </b>{{$pembayaran->bulan}}</p>
+                        <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Pembayaran untuk bulan: </b>{{Carbon\Carbon::now()->month($pembayaran->bulan)->isoFormat('MMMM')}}</p>
                         @php
                         $harga_kost = $pembayaran->kost->harga;
                         $total_fasilitas = $total_biaya = 0;
