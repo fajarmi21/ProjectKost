@@ -6,7 +6,7 @@
 @section('content')
 
 <!-- ======= Hero Section ======= -->
-{{-- <section id="hero" class="d-flex align-items-center">
+<section id="hero" class="d-flex align-items-center">
 
     <div class="container" data-aos="zoom-out" data-aos-delay="100">
         <div class="row">
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-</section><!-- End Hero --> --}}
+</section><!-- End Hero -->
 
 <main id="main">
 
@@ -52,10 +52,10 @@
     <section id="portfolio" class="portfolio-details">
         <div class="container" data-aos="fade-up">
             <div class="raw" style="border: 5; border-style:solid; margin-top: 100px;">
-                <h5 style="font-size: 1.25rem; font-weight: bold; color: #000000;">Daftar Kost</h5>
-                <p class="mb-0"
-                    style="font-family: 'Barlow', sans-serif !important; font-weight: 300; font-size: 1rem; color: #000000;letter-spacing: 0.03rem; margin-bottom: 10px;">
-                    <b>Kami menyediakan berbagai macam kost yang bisa Anda Tempati</b></p>
+                <h5 style="font-size: 1.25rem; font-weight: bold; color: #000000;">Daftar Kamar</h5>
+                <p class="mb-0" style="font-family: 'Barlow', sans-serif !important; font-weight: 300; font-size: 1rem; color: #000000;letter-spacing: 0.03rem; margin-bottom: 10px;">
+                    <b>Kami menyediakan beberapa kamar yang bisa anda tempati</b>
+                </p>
             </div>
             <div class="row">
                 @foreach($kost as $data)
@@ -69,7 +69,7 @@
                                     <p class="card-text">{{$data->kategori}}</p>
                                     <a href="/home/detail/{{$data->id}}" class="btn btn-info">Detail</a>
                                     <a href="/booking/pesan/{{$data->id}}" class="btn btn-warning">Booking</a>
-    
+
                                 </div>
                             </div>
                         </div>
@@ -84,9 +84,11 @@
         <div class="container" data-aos="fade-up">
             <div class="raw" style="border: 5; border-style:solid; margin-top: 100px;">
                 <h5 style="font-size: 1.25rem; font-weight: bold; color: #000000;">Daftar Fasilitas Tambahan</h5>
-                <p class="mb-0"
-                    style="font-family: 'Barlow', sans-serif !important; font-weight: 300; font-size: 1rem; color: #000000;letter-spacing: 0.03rem; margin-bottom: 10px;">
-                    <b>Kami juga menyediakan fasilitas tambahan yang bisa Anda Pakai</b></p>
+                <p class="mb-0" style="font-family: 'Barlow', sans-serif !important; font-weight: 300; font-size: 1rem; color: #000000;letter-spacing: 0.03rem; margin-bottom: 10px;">
+                    <b>Kami juga menyediakan fasilitas tambahan yang bisa anda pakai dengan menambah biaya</b>
+                </p>
+                <p>Harga yang tertera adalah harga untuk menggunakan fasilitas tambahan selama 1 bulan
+                </p>
             </div>
             <div class="row">
                 @foreach($fas as $data)
@@ -199,10 +201,7 @@
                 <div class="col-lg-6">
                     <div class="row">
                         <div class="col-md-12">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1634.1530719203993!2d111.97973356579428!3d-7.805804806335822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x38e489e8404a68c4!2zN8KwNDgnMjIuNSJTIDExMcKwNTgnNTIuMSJF!5e1!3m2!1sid!2sid!4v1654134932546!5m2!1sid!2sid"
-                                width="546" height="273" style="border:0;" allowfullscreen="" loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1634.1530719203993!2d111.97973356579428!3d-7.805804806335822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x38e489e8404a68c4!2zN8KwNDgnMjIuNSJTIDExMcKwNTgnNTIuMSJF!5e1!3m2!1sid!2sid!4v1654134932546!5m2!1sid!2sid" width="546" height="273" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
                 </div>

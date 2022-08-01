@@ -45,11 +45,11 @@
                                                 <input name="kost_id" id="kost_id" value="{{$pembayaran->kost_id}}" type="hidden">
                                             </div>
                                             <div class="position-relative form-group mt-4 entry-content">
-                                                <label for="bulan" style="font-weight: bold;">Jumlah Bulan</label>
+                                                <label for="bulan" style="font-weight: bold;">Ajukan Sewa Per Bulan</label>
                                                 <input name="bulan" id="bulan" type="number" min="1" class="form-control" value="1" onchange="Maxim(this.value)">
                                             </div>
                                             <div>
-                                                <label for="fas" style="font-weight: bold;">Fasilitas Tambahan</label>
+                                                <label for="fas" style="font-weight: bold;">Fasilitas Tambahan untuk Per Bulan</label>
                                                 @foreach ($fasilitas as $item)
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text">{{$item->fasilitas}}</span>
@@ -65,19 +65,19 @@
                                                     @if ($pembayaran->fas_id == "")
                                                         @foreach ($fasilitas as $item)
                                                         <option value="{{$item->id }}"> {{$item->fasilitas}} - {{$item->harga}}</option>
-                                                        @endforeach
-                                                    @else
-                                                        @foreach ($fasilitas as $item)
-                                                            @if(in_array($item->id, $Idfasilitas))
-                                                            <option value="{{$item->id }}" selected> {{$item->fasilitas}}</option>
-                                                            @else
-                                                            <option value="{{$item->id }}"> {{$item->fasilitas}} - {{$item->harga}}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div> --}}
-                                            <button type="submit" class="btn btn-primary mt-4"><i class="pe-7s-diskette"></i> Simpan Data</button>
+                                            @endforeach
+                                            @else
+                                            @foreach ($fasilitas as $item)
+                                            @if(in_array($item->id, $Idfasilitas))
+                                            <option value="{{$item->id }}" selected> {{$item->fasilitas}}</option>
+                                            @else
+                                            <option value="{{$item->id }}"> {{$item->fasilitas}} - {{$item->harga}}</option>
+                                            @endif
+                                            @endforeach
+                                            @endif
+                                            </select>
+                                        </div> --}}
+                                        <button type="submit" class="btn btn-primary mt-4"><i class="pe-7s-diskette"></i> Simpan Data</button>
                                     </form>
                                 </article>
                             </div><!-- End blog entries list -->

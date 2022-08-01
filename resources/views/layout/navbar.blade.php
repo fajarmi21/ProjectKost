@@ -39,7 +39,9 @@
       @else
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          {{-- <li><a class="nav-link scrollto" href="/">Beranda</a></li> --}}
+          <li><a class="nav-link scrollto" href="/">Beranda</a></li>
+          <li><a class="nav-link scrollto" href="#services">Layanan</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
           {{-- <li><a class="nav-link scrollto" href="/daftarkost">Daftar Kamar</a></li>
           <li><a class="nav-link scrollto" href="/fas">Daftar Fasilitas</a></li> --}}
         </ul>

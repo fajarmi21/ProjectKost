@@ -1,7 +1,7 @@
 <!-- menampilkan berdasarkan file index di folder layouts  -->
 @extends('layout.index')
 <!-- section untu title  -->
-@section('title', 'Data Booking')
+@section('title', 'Data Kamar')
 <!-- section untuk content  -->
 @section('content')
 
@@ -14,7 +14,7 @@
                 <li><a href="/">Home</a></li>
                 <li>Detail</li>
             </ol>
-            <h2>Data Kost</h2>
+            <h2>Data Kamar</h2>
 
         </div>
     </section><!-- End Breadcrumbs -->
@@ -38,7 +38,7 @@
                             <h5>Biaya Sewa</h5>
                             <p>{{$kost->harga}}</p>
                         </article>
-                    <a href="/booking/pesan/{{$kost->id}}" class="col-md-12 btn btn-primary">Booking</a>
+                        <a href="/booking/pesan/{{$kost->id}}" class="col-md-12 btn btn-primary">Booking</a>
                     </div><!-- End blog entries list -->
                     <div class="col-md-12 col-lg-4 entries">
                         <div class="card">
@@ -49,12 +49,10 @@
                                         <div class="portfolio-details-slider swiper-container">
                                             <div class="swiper-wrapper align-items-center">
                                                 <div class="swiper-slide">
-                                                    <img src="{{url('/images')}}/{{$kost->fotokost}}" id="fotokost"
-                                                        alt="" style=" width:100%;">
+                                                    <img src="{{url('/images')}}/{{$kost->fotokost}}" id="fotokost" alt="" style=" width:100%;">
                                                 </div>
                                                 <div class="swiper-slide">
-                                                    <img src="{{url('/images')}}/{{$kost->fotokost2}}" id="fotokost2"
-                                                        alt="" style="width:100%;">
+                                                    <img src="{{url('/images')}}/{{$kost->fotokost2}}" id="fotokost2" alt="" style="width:100%;">
                                                 </div>
                                             </div>
                                             <div class="swiper-pagination"></div>
@@ -71,19 +69,19 @@
                                                 @foreach ($fasilitas as $data)
                                                 <div class="swiper-slide">
                                                     <img src="{{url('/images')}}/{{$data->foto}}" alt="Tidak ada foto">
-                                                    <span class="title">{{$data->fasilitas}} - {{$data->harga}}</span>
-                                                </div>
-                                                @endforeach
-                                            </div>
-                                            <div class="swiper-pagination"></div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div> --}}
+                            <span class="title">{{$data->fasilitas}} - {{$data->harga}}</span>
                         </div>
+                        @endforeach
                     </div>
+                    <div class="swiper-pagination"></div>
                 </div>
             </div>
+    </section>
+    </div> --}}
+    </div>
+    </div>
+    </div>
+    </div>
     </section><!-- End Blog Section -->
 
 </main>

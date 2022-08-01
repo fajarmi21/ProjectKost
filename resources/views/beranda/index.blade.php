@@ -118,8 +118,7 @@
                                 <div class="card-body">
                                     <div class="tab-content p-0">
                                         <!-- Morris chart - Sales -->
-                                        <div class="chart tab-pane active" id="revenue-chart"
-                                            style="position: relative; height: 300px;">
+                                        <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
                                             @if ($pembayaran->status_bayar == 'Diterima(Booking)')
                                             <blockquote class="m-b-25">
                                                 <p>Selamat booking Anda telah diterima, silahkan lakukan pembayaran
@@ -513,63 +512,65 @@
 @endsection
 @section('script')
 <script>
-    Date.prototype.addDays = function (days) {
+    Date.prototype.addDays = function(days) {
         let date = new Date(this.valueOf());
         date.setDate(date.getDate() + days);
         return date;
-        }
-        var date1 = new Date('{{$pembayaran->tgl_bayar}}');
-        CountDownTimer(date1.addDays(7), 'countdown1');
-        CountDownTimer('{{$pembayaran->tenggat}}', 'countdown2');
-        function CountDownTimer(dt, id)
-        {
-            var end = new Date(dt);
-            var timeEnd = new Date('{{$time}}');
-            var _second = 1000;
-            var _minute = _second * 60;
-            var _hour = _minute * 60;
-            var _day = _hour * 24;
-            var timer;
-            function showRemaining() {
-                var now = new Date();
-                var oneDay = 1000 * 60 * 60 * 24;
-                var distance = end - now;
-                var mathdistance = Math.round(distance / oneDay);
-                if (mathdistance < 0) {
+    }
+    var date1 = new Date('{{$pembayaran->tgl_bayar}}');
+    CountDownTimer(date1.addDays(7), 'countdown1');
+    CountDownTimer('{{$pembayaran->tenggat}}', 'countdown2');
 
-                    clearInterval(timer);
-                    document.getElementById(id).innerHTML = end.toLocaleDateString('id');
-                    document.getElementById(id).innerHTML = '<blockquote><p>Mohon maaf Anda belum membayar, jika dalam waktu 3 bulan belum melakukan pembayaran maka akan dikeluarkan dari kost. Terima Kasih</p></blockquote>';
-                    return;
-                }else if (mathdistance < 7) {
-                    var days = Math.floor(distance / _day);
-                    var hours = Math.floor((distance % _day) / _hour);
-                    var minutes = Math.floor((distance % _hour) / _minute);
-                    var seconds = Math.floor((distance % _minute) / _second);
+    function CountDownTimer(dt, id) {
+        var end = new Date(dt);
+        var timeEnd = new Date('{{$time}}');
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
 
+        function showRemaining() {
+            var now = new Date();
+            var oneDay = 1000 * 60 * 60 * 24;
+            var distance = end - now;
+            var mathdistance = Math.round(distance / oneDay);
+            if (mathdistance < 0) {
+
+                clearInterval(timer);
+                document.getElementById(id).innerHTML = end.toLocaleDateString('id');
+                document.getElementById(id).innerHTML = '<blockquote><p>Mohon maaf Anda belum membayar, jika dalam waktu 3 bulan belum melakukan pembayaran maka akan dikeluarkan dari kost. Terima Kasih</p></blockquote>';
+                return;
+            } else if (mathdistance < 7) {
+                var days = Math.floor(distance / _day);
+                var hours = Math.floor((distance % _day) / _hour);
+                var minutes = Math.floor((distance % _hour) / _minute);
+                var seconds = Math.floor((distance % _minute) / _second);
+
+                document.getElementById(id).innerHTML = days + ' hari ';
+                document.getElementById(id).innerHTML += hours + ' jam ';
+                document.getElementById(id).innerHTML += minutes + ' menit ';
+                document.getElementById(id).innerHTML += seconds + ' detik';
+                document.getElementById(id).innerHTML += '<p><b>SEGERA MELAKUKAN PEMBAYARAN!!!</b></p>';
+            } else {
+                var days = Math.floor(distance / _day);
+                var hours = Math.floor((distance % _day) / _hour);
+                var minutes = Math.floor((distance % _hour) / _minute);
+                var seconds = Math.floor((distance % _minute) / _second);
+
+                if ('{{$pembayaran->status_bayar}}' == 'Booking') {
+                    document.getElementById(id).innerHTML = '<br><blockquote><p>Mohon maaf Anda belum membayar, jika dalam waktu <b>' + days + ' hari ' + hours + ' jam</b> atau maksimal tanggal (' + end.toLocaleDateString('id') + ') belum melakukan pembayaran maka data booking anda akan dihapus. Terima Kasih</p></blockquote>';
+                } else {
                     document.getElementById(id).innerHTML = days + ' hari ';
                     document.getElementById(id).innerHTML += hours + ' jam ';
                     document.getElementById(id).innerHTML += minutes + ' menit ';
                     document.getElementById(id).innerHTML += seconds + ' detik';
-                    document.getElementById(id).innerHTML +='<p><b>SEGERA MELAKUKAN PEMBAYARAN!!!</b></p>';
-                } else {
-                    var days = Math.floor(distance / _day);
-                    var hours = Math.floor((distance % _day) / _hour);
-                    var minutes = Math.floor((distance % _hour) / _minute);
-                    var seconds = Math.floor((distance % _minute) / _second);
+                    document.getElementById(id).innerHTML += '<p>Silahkan melakukan pembayaran untuk bulan selanjutnya sebelum tanggal : ' + end.toLocaleDateString('id') + '</p>';
 
-                    if('{{$pembayaran->status_bayar}}' == 'Booking') {
-                        document.getElementById(id).innerHTML = '<br><blockquote><p>Mohon maaf Anda belum membayar, jika dalam waktu <b>' + days + ' hari ' + hours + ' jam</b> ('+ end.toLocaleDateString('id') +') belum melakukan pembayaran maka data booking anda akan hangus. Terima Kasih</p></blockquote>';
-                    } else {
-                        document.getElementById(id).innerHTML = days + ' hari ';
-                        document.getElementById(id).innerHTML += hours + ' jam ';
-                        document.getElementById(id).innerHTML += minutes + ' menit ';
-                        document.getElementById(id).innerHTML += seconds + ' detik';
-                        document.getElementById(id).innerHTML += '<p>Tanggal bayar : '+end.toLocaleDateString('id')+'</p>';document.getElementById(id).innerHTML += '<p>Tanggal berakhir : '+timeEnd.toLocaleDateString('id')+'</p>';
-                    }
                 }
             }
-            timer = setInterval(showRemaining, 1000);
         }
+        timer = setInterval(showRemaining, 1000);
+    }
 </script>
 @endsection
