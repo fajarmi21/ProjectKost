@@ -128,6 +128,10 @@
                                                         Nota Booking</button>
                                                 </a>
                                             </blockquote>
+                                            @elseif($pembayaran->status_bayar == 'Sudah Transfer(Booking)')
+                                                <blockquote class="m-b-25">
+                                                    <p>Selamat booking Anda telah diproses, silahkan tunggu konfirmasi dari admin. Ada dapat melihat status pembayaran <a href="/pembayaran">disini</a></p>
+                                                </blockquote>
                                             @elseif ($pembayaran->status_bayar == 'Booking')
                                             <div id="countdown1"></div>
                                             @else
