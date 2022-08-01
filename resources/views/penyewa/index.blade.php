@@ -42,8 +42,10 @@
                                                     <td>{{$data->nama_kost}}</td>
                                                     @if ($data->status_bayar == 'Diterima')
                                                     <td>{{ date('d-m-Y', strtotime($data->tgl_bayar. ' + 1 months')) }}</td>
+                                                    @elseif($data->status_bayar == 'Diterima(Booking)' || $data->status_bayar == 'Booking')
+                                                    <td>Booking ({{ date('d-m-Y', strtotime($data->tgl_bayar. ' + 1 weeks')) }})</td>
                                                     @else
-                                                    <td>Booking ({{ date('d-m-Y', strtotime($data->tgl_bayar. ' + 3 months')) }})</td>
+                                                    <td>{{ $data->status_bayar }} ({{ date('d-m-Y', strtotime($data->tgl_bayar. ' + 1 weeks')) }})</td>
                                                     @endif
                                                     <td>
                                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('penyewa.destroy', $data->user_id) }}" method="POST">

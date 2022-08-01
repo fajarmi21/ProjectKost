@@ -25,15 +25,15 @@ class PenyewaController extends Controller
             FROM pembayaran p1
             INNER JOIN
             (
-                SELECT max(updated_at) MaxPostDate, kost_id
+                SELECT max(id) StatusBayar, kost_id
                 FROM pembayaran
                 GROUP BY kost_id
             ) p2
             ON p1.kost_id = p2.kost_id
-                JOIN kost as k ON p1.kost_id = k.id
-                JOIN users as u ON p1.user_id = u.id
-                JOIN penyewa as p ON p1.user_id = p.user_id
-            AND p1.updated_at = p2.MaxPostDate
+            JOIN kost as k ON p1.kost_id = k.id
+            JOIN users as u ON p1.user_id = u.id
+            JOIN penyewa as p ON p1.user_id = p.user_id
+            AND p1.id = p2.StatusBayar
 	        AND k.statuskost = "Terisi"
             GROUP BY p1.kost_id');
         return view('penyewa.index', ['penyewa'=>$penyewa,'kamar'=>$kamar]);
