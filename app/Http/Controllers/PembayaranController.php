@@ -78,7 +78,7 @@ class PembayaranController extends Controller
             $pembayaran =  DB::table('pembayaran')
                 ->join('kost', 'kost.id', '=', 'pembayaran.kost_id')
                 ->where('pembayaran.id', $cek->id)
-                ->select('pembayaran.*', 'kost.nama_kost')->first();
+                ->select('pembayaran.*', 'kost.nama_kost', 'kost.harga as kharga')->first();
             $fasilitas = Fasilitas::all();
             $user = User::all();
             $kost = Kost::all();
@@ -89,7 +89,7 @@ class PembayaranController extends Controller
                 ->join('fasilitas', 'fasilitas.id', '=', 'pembayaran.fas_id')
                 ->join('kost', 'kost.id', '=', 'pembayaran.kost_id')
                 ->where('pembayaran.id', $cek->id)
-                ->select('pembayaran.*', 'fasilitas.harga', 'fasilitas.fasilitas', 'kost.nama_kost')->first();
+                ->select('pembayaran.*', 'fasilitas.harga', 'fasilitas.fasilitas', 'kost.nama_kost', 'kost.harga as kharga')->first();
             $fasilitas = Fasilitas::all();
             $user = User::all();
             $kost = Kost::all();

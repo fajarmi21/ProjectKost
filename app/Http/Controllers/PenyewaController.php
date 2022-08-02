@@ -21,21 +21,24 @@ class PenyewaController extends Controller
     public function index()
     {
         $penyewa = Penyewa::all();
-        $kamar = DB::select('SELECT *
-            FROM pembayaran p1
+        $kamar = DB::select('SELECT tabungans.id, tabungans.saldo_tabungan, users.nama, users.email, users.id as idn
+            FROM users
+					 LEFT JOIN tabungans ON tabungans.id_nasabah = users.id
+                        WHERE users.id_level = "1"
+												GROUP BY users.nama
+						UNION 
+						SELECT t1.id, t1.saldo_tabungan, u.nama, u.email, u.id as idn
+            FROM tabungans t1
             INNER JOIN
             (
-                SELECT max(id) StatusBayar, kost_id
-                FROM pembayaran
-                GROUP BY kost_id
-            ) p2
-            ON p1.kost_id = p2.kost_id
-            JOIN kost as k ON p1.kost_id = k.id
-            JOIN users as u ON p1.user_id = u.id
-            JOIN penyewa as p ON p1.user_id = p.user_id
-            AND p1.id = p2.StatusBayar
-	        AND k.statuskost = "Terisi"
-            GROUP BY p1.kost_id');
+                SELECT max(created_at) created, id_nasabah
+                FROM tabungans
+                GROUP BY id_nasabah
+            ) t2
+            ON t1.id_nasabah = t2.id_nasabah
+						JOIN users u ON t1.id_nasabah = u.id
+            AND u.id_level = "1"
+            GROUP BY t1.id_nasabah');
         return view('penyewa.index', ['penyewa'=>$penyewa,'kamar'=>$kamar]);
     }
 
