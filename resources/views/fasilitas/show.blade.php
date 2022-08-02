@@ -28,19 +28,19 @@
                         <div class="col-md-6">
                             <div class="position-relative form-group">
                                 <label for="" style="font-weight: bold;">Keterangan</label>
-                                <input type="text" class="form-control" readonly value="">
+                                <input type="text" class="form-control" readonly value="{{$fasilitas->ket_fas}}">
                             </div>
                         </div>
                     </div>
                     <div class="form row">
                         <div class="col-md-6">
                             <div class="position-relative form-group">
-                                <label for="fotofasilitas" style="font-weight: bold;">fotofasilitas</label><br>
+                                <label for="fotofasilitas" style="font-weight: bold;">foto fasilitas</label><br>
                                 <img src="{{url('/images')}}/{{$fasilitas->foto}}" style="max-width: 300px;">
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('fasilitas.edit', $fasilitas->id)}}" class="btn btn-primary"><i class="pe-7s-diskette"></i> Edit Data</a>
+
                 </form>
             </div>
         </div>

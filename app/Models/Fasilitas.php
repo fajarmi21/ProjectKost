@@ -10,7 +10,7 @@ class Fasilitas extends Model
     use HasFactory;
     protected $table = 'fasilitas';
     protected $fillable = [
-        'fasilitas','harga','foto'
+        'fasilitas', 'harga', 'foto', 'ket_fas'
     ];
 
     public function booking()

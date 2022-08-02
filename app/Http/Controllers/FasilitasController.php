@@ -45,13 +45,14 @@ class FasilitasController extends Controller
     public function store(Request $request)
     {
         $nama = $request->fasilitas;
+        $keterangan = $request->ket_fas;
         $images = $request->file('foto');
-        $imagefasilitas = $nama. '.' . $images->extension();
+        $imagefasilitas = $nama . '.' . $images->extension();
         $images->move(public_path('images'), $imagefasilitas);
-        Fasilitas::create($request->except(['foto'])+[
+        Fasilitas::create($request->except(['foto']) + [
             'foto' => $imagefasilitas
         ]);
-        return redirect('fasilitas')->with('success','Berhasil Menambah Data Fasilitas');
+        return redirect('fasilitas')->with('success', 'Berhasil Menambah Data Fasilitas');
     }
 
     /**
@@ -75,7 +76,7 @@ class FasilitasController extends Controller
     public function edit($id)
     {
         $fasilitas = fasilitas::find($id);
-        return view("fasilitas.edit",compact("fasilitas"));
+        return view("fasilitas.edit", compact("fasilitas"));
     }
 
     /**
@@ -90,18 +91,18 @@ class FasilitasController extends Controller
         $fasilitas = fasilitas::find($id);
         if ($request->file('foto') == "") {
             $fasilitas->foto = $fasilitas->foto;
-        }
-        else {
+        } else {
             $nama = $request->fasilitas;
             $images = $request->file('foto');
-            $imagefasilitas = $nama.time(). '.' . $images->extension();
+            $imagefasilitas = $nama . time() . '.' . $images->extension();
             $images->move(public_path('images'), $imagefasilitas);
             $fasilitas->foto = $imagefasilitas;
         }
         $fasilitas->fasilitas = $request->fasilitas;
         $fasilitas->harga = $request->harga;
+        $fasilitas->ket_fas = $request->ket_fas;
         $fasilitas->save();
-        return redirect('fasilitas')->with('success','Berhasil Mengubah Data Fasilitas');
+        return redirect('fasilitas')->with('success', 'Berhasil Mengubah Data Fasilitas');
     }
 
     /**
@@ -115,6 +116,6 @@ class FasilitasController extends Controller
         $data = Fasilitas::findOrFail($id);
         $data->delete();
         // Fasilitas::destroy($fasilitas->id);
-        return redirect('fasilitas')->with('success','Berhasil Menghapus Data Fasilitas');
+        return redirect('fasilitas')->with('success', 'Berhasil Menghapus Data Fasilitas');
     }
 }

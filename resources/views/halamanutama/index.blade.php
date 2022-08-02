@@ -99,7 +99,8 @@
                                 <img src="{{url('/images')}}/{{$data->foto}}" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">{{$data->fasilitas}}</h5>
-                                    <p class="card-text">{{$data->harga}}</p>
+                                    <h6 class="card-text">{{$data->ket_fas}}</h6>
+                                    <b class="card-text">{{$data->harga}}</b>
                                 </div>
                             </div>
                         </div>

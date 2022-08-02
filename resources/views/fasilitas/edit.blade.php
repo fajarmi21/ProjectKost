@@ -28,6 +28,12 @@
                         </div>
                         <div class="col-md-6">
                             <div class="position-relative form-group">
+                                <label for="ket_fas" style="font-weight: bold;">Keterangan</label>
+                                <input type="text" class="form-control" id="ket_fas" name="ket_fas" value="{{$fasilitas->ket_fas}}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
                                 <label for="foto" style="font-weight: bold;">Foto Fasilitas</label>
                                 <input name="foto" id="foto" type="file" class="form-control" onchange="previewfoto(this)">
                                 <img src="{{url('/images')}}/{{$fasilitas->foto}}" id="previewfoto" style="max-width: 350px; margin-top: 10px;">
@@ -46,12 +52,12 @@
 
 @section('script')
 <script>
-    function previewfoto(input){
-        var file=$("input[type=file]").get(0).files[0];
-        if(file){
+    function previewfoto(input) {
+        var file = $("input[type=file]").get(0).files[0];
+        if (file) {
             var reader = new FileReader();
-            reader.onload = function(){
-                $('#previewfoto').attr("src",reader.result);
+            reader.onload = function() {
+                $('#previewfoto').attr("src", reader.result);
             }
             reader.readAsDataURL(file);
         }

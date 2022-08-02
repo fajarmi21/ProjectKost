@@ -34,22 +34,35 @@
                                                     <label for="name" style="font-weight: bold;">Fasilitas</label>
                                                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="fasilitas" name="fasilitas" required>
                                                     @error('name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    {{ $message }}
-                                                </span>
-                                                @enderror
-                                            </div>
+                                                    <span class="invalid-feedback" role="alert">
+                                                        {{ $message }}
+                                                    </span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="position-relative form-group">
                                                     <label for="jenis_kelamin" style="font-weight: bold;">Harga</label>
-                                                    <input type="text" class="form-control @error('jenis_kelamin') is-invalid @enderror" id="harga" name="harga"  required>
+                                                    <input type="text" class="form-control @error('jenis_kelamin') is-invalid @enderror" id="harga" name="harga" required>
                                                     @error('jenis_kelamin')
-                                                <span class="invalid-feedback" role="alert">
-                                                    {{ $message }}
-                                                </span>
-                                                @enderror
+                                                    <span class="invalid-feedback" role="alert">
+                                                        {{ $message }}
+                                                    </span>
+                                                    @enderror
+                                                </div>
                                             </div>
+                                        </div>
+                                        <div class="form row">
+                                            <div class="col-md-6">
+                                                <div class="position-relative form-group">
+                                                    <label for="ket_fas" style="font-weight: bold;">Keterangan</label>
+                                                    <input type="text" class="form-control @error('ket_fas') is-invalid @enderror" id="ket_fas" name="ket_fas" required>
+                                                    @error('ket_fas')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        {{ $message }}
+                                                    </span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="position-relative form-group">
@@ -57,11 +70,11 @@
                                                     <input required name="foto" id="foto" type="file" class="form-control @error('jenis_kelamin') is-invalid @enderror" onchange="previewfoto(this)">
                                                     <img src="" id="previewfoto" style="max-width: 350px; margin-top: 10px;">
                                                     @error('jenis_kelamin')
-                                                <span class="invalid-feedback" role="alert">
-                                                    {{ $message }}
-                                                </span>
-                                                @enderror
-                                            </div>
+                                                    <span class="invalid-feedback" role="alert">
+                                                        {{ $message }}
+                                                    </span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary"><i class="pe-7s-diskette"></i> Simpan Data</button>
