@@ -24,15 +24,15 @@ class KostController extends Controller
             $kost = Kost::get();
             return view('kost.index', ['kost' => $kost]);
         } elseif (Auth::user()->role_id == '6') {
-            $kost = Kost::where('statuskost','Tersedia')->get();
+            $kost = Kost::where('statuskost', 'Tersedia')->get();
             return view('kost.indexkost', ['kost' => $kost]);
         }
-        $kost = Kost::where('statuskost','Tersedia')->get();
+        $kost = Kost::where('statuskost', 'Tersedia')->get();
         return view('kost.indexkost', ['kost' => $kost]);
     }
     public function indexkost()
     {
-        $kost = Kost::where('statuskost','Tersedia')->paginate(8);
+        $kost = Kost::where('statuskost', 'Tersedia')->paginate(8);
 
         return view('kost.indexkost', ['kost' => $kost]);
     }
@@ -60,17 +60,26 @@ class KostController extends Controller
         $images = $request->file('fotokost');
         $imagefotokost = 'fotokost' . time() . '.' . $images->extension();
         $images->move(public_path('images'), $imagefotokost);
-        if ($request->file('fotokost2') != null) {
-            # code...
-            $images = $request->file('fotokost2');
-            $imagefotokost2 = 'fotokost2' . time() . '.' . $images->extension();
-            $images->move(public_path('images'), $imagefotokost2);
-        } elseif ($request->file('fotokost3') != null) {
-            # code...
-            $images = $request->file('fotokost3');
-            $imagefotokost3 = 'fotokost3' . time() . '.' . $images->extension();
-            $images->move(public_path('images'), $imagefotokost3);
-        }
+
+        $images = $request->file('fotokost2');
+        $imagefotokost2 = 'fotokost2' . time() . '.' . $images->extension();
+        $images->move(public_path('images'), $imagefotokost2);
+
+        $images = $request->file('fotokost3');
+        $imagefotokost3 = 'fotokost3' . time() . '.' . $images->extension();
+        $images->move(public_path('images'), $imagefotokost3);
+
+        $images = $request->file('fotokost4');
+        $imagefotokost4 = 'fotokost4' . time() . '.' . $images->extension();
+        $images->move(public_path('images'), $imagefotokost4);
+
+        $images = $request->file('fotokost5');
+        $imagefotokost5 = 'fotokost5' . time() . '.' . $images->extension();
+        $images->move(public_path('images'), $imagefotokost5);
+
+        $images = $request->file('fotokost6');
+        $imagefotokost6 = 'fotokost6' . time() . '.' . $images->extension();
+        $images->move(public_path('images'), $imagefotokost6);
 
         $kost = new kost;
         $kost->nama_kost = $request->nama_kost;
@@ -80,11 +89,12 @@ class KostController extends Controller
         $kost->keterangan = $request->keterangan;
         $kost->statuskost = $request->status;
         $kost->fotokost = $imagefotokost;
-        if ($request->file('fotokost2') != null) {
         $kost->fotokost2 = $imagefotokost2;
-        } elseif ($request->file('fotokost3') != null) {
         $kost->fotokost3 = $imagefotokost3;
-        }
+        $kost->fotokost4 = $imagefotokost4;
+        $kost->fotokost5 = $imagefotokost5;
+        $kost->fotokost6 = $imagefotokost6;
+
         $kost->save();
 
         return redirect('/kost')->with('toast_success', 'Data berhasil ditambahkan!');
@@ -98,8 +108,8 @@ class KostController extends Controller
      */
     public function show($id)
     {
-            $kost = Kost::where('id', $id)->first();
-            return view('kost.show', ['kost' => $kost]);
+        $kost = Kost::where('id', $id)->first();
+        return view('kost.show', ['kost' => $kost]);
     }
 
     /**
@@ -139,8 +149,7 @@ class KostController extends Controller
                     'keterangan' => $request->keterangan,
                     'fotokost' => $imagefotokost
                 ]);
-        }
-        elseif (!empty($request->file('fotokost2'))) {
+        } elseif (!empty($request->file('fotokost2'))) {
             // unlink(public_path('images') . '/' . $kost->fotokost);
             $images = $request->file('fotokost');
             $imagefotokost = 'fotokost' . time() . '.' . $images->extension();
@@ -161,8 +170,7 @@ class KostController extends Controller
                     'fotokost' => $imagefotokost,
                     'fotokost2' => $imagefotokost2
                 ]);
-        }
-        elseif (!empty($request->file('fotokost3'))) {
+        } elseif (!empty($request->file('fotokost3'))) {
             // unlink(public_path('images') . '/' . $kost->fotokost);
             $images = $request->file('fotokost');
             $imagefotokost = 'fotokost' . time() . '.' . $images->extension();

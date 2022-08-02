@@ -37,25 +37,37 @@
                     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-indicators">
                             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                            @if (isset($kost->fotokost2))
+
                             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            @elseif (isset($kost->fotokost3))
+
                             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                            @endif
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+
                         </div>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <img src="{{url('/images')}}/{{$kost->fotokost}}" class="d-block w-100" alt="..." style="width: auto; max-width: 100%; height: 500px;-webkit-backface-visibility: hidden;">
                             </div>
-                            @if (isset($kost->fotokost2))
+
                             <div class="carousel-item">
                                 <img src="{{url('/images')}}/{{$kost->fotokost2}}" class="d-block w-100" alt="..." style="width: auto; max-width: 100%; height: 500px;-webkit-backface-visibility: hidden;">
                             </div>
-                            @elseif (isset($kost->fotokost3))
+
                             <div class="carousel-item">
                                 <img src="{{url('/images')}}/{{$kost->fotokost3}}" class="d-block w-100" alt="..." style="width: auto; max-width: 100%; height: 500px;-webkit-backface-visibility: hidden;">
                             </div>
-                            @endif
+                            <div class="carousel-item">
+                                <img src="{{url('/images')}}/{{$kost->fotokost4}}" class="d-block w-100" alt="..." style="width: auto; max-width: 100%; height: 500px;-webkit-backface-visibility: hidden;">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{url('/images')}}/{{$kost->fotokost5}}" class="d-block w-100" alt="..." style="width: auto; max-width: 100%; height: 500px;-webkit-backface-visibility: hidden;">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{{url('/images')}}/{{$kost->fotokost6}}" class="d-block w-100" alt="..." style="width: auto; max-width: 100%; height: 500px;-webkit-backface-visibility: hidden;">
+                            </div>
+
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>

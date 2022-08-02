@@ -89,11 +89,31 @@
                                                 <p style="font-weight: bold;">Foto Kamar</p>
                                             </label>
                                             <input required name="fotokost" id="fotokost" type="file" class="form-control @error('fotokost') is-invalid @enderror" onchange="previewfotokost(this)">
+
                                             <label for="fotokost2" class="">
                                                 <p style="font-weight: bold;">Foto Kamar(Opsional)</p>
                                             </label>
                                             <input required name="fotokost2" id="fotokost2" type="file" class="form-control @error('fotokost2') is-invalid @enderror" onchange="previewfotokost(this)">
 
+                                            <label for="fotokost4" class="">
+                                                <p style="font-weight: bold;">Foto Kamar</p>
+                                            </label>
+                                            <input required name="fotokost4" id="fotokost4" type="file" class="form-control @error('fotokost4') is-invalid @enderror" onchange="previewfotokost(this)">
+
+                                            <label for="fotokost5" class="">
+                                                <p style="font-weight: bold;">Foto Kamar</p>
+                                            </label>
+                                            <input required name="fotokost5" id="fotokost5" type="file" class="form-control @error('fotokost5') is-invalid @enderror" onchange="previewfotokost(this)">
+
+                                            <label for="fotokost3" class="">
+                                                <p style="font-weight: bold;">Foto Kamar</p>
+                                            </label>
+                                            <input required name="fotokost3" id="fotokost3" type="file" class="form-control @error('fotokost3') is-invalid @enderror" onchange="previewfotokost(this)">
+
+                                            <label for="fotokost6" class="">
+                                                <p style="font-weight: bold;">Foto Kamar</p>
+                                            </label>
+                                            <input required name="fotokost6" id="fotokost6" type="file" class="form-control @error('fotokost6') is-invalid @enderror" onchange="previewfotokost(this)">
                                             @error('fotokost')
                                             <span class="invalid-feedback" role="alert">
                                                 {{ $message }}

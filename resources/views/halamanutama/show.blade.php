@@ -69,6 +69,18 @@
                                                 <div class="swiper-slide">
                                                     <img src="{{url('/images')}}/{{$kost->fotokost2}}" id="fotokost2" alt="" style="width:100%;">
                                                 </div>
+                                                <div class="swiper-slide">
+                                                    <img src="{{url('/images')}}/{{$kost->fotokost3}}" id="fotokost3" alt="" style="width:100%;">
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <img src="{{url('/images')}}/{{$kost->fotokost4}}" id="fotokost4" alt="" style="width:100%;">
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <img src="{{url('/images')}}/{{$kost->fotokost5}}" id="fotokost5" alt="" style="width:100%;">
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <img src="{{url('/images')}}/{{$kost->fotokost6}}" id="fotokost6" alt="" style="width:100%;">
+                                                </div>
                                             </div>
                                             <div class="swiper-pagination"></div>
                                         </div>
