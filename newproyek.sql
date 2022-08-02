@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Agu 2022 pada 12.52
+-- Waktu pembuatan: 02 Agu 2022 pada 15.10
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 7.4.29
 
@@ -153,14 +153,13 @@ CREATE TABLE `kost` (
 --
 
 INSERT INTO `kost` (`id`, `nama_kost`, `kategori_kost`, `fasilitas`, `keterangan`, `harga`, `statuskost`, `fotokost`, `fotokost2`, `fotokost3`, `fotokost4`, `fotokost5`, `fotokost6`, `created_at`, `updated_at`) VALUES
-(1, 'Kamar 1', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Terisi', 'fotokost1658892169.jpg', NULL, '', '', '', '', '2022-07-11 08:28:00', '2022-07-31 09:24:50'),
-(2, 'Kamar 2', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Tersedia', 'fotokost1658892198.jpg', NULL, '', '', '', '', '2022-07-11 08:29:08', '2022-07-31 04:56:44'),
-(3, 'Kamar 3', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Terisi', 'fotokost1658892274.jpg', NULL, '', '', '', '', '2022-07-11 08:29:51', '2022-07-27 05:24:04'),
-(4, 'Kamar 4', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Terisi', 'fotokost1658892312.jpg', NULL, '', '', '', '', '2022-07-11 08:30:30', '2022-07-27 03:25:12'),
-(5, 'Kamar 5', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Tersedia', 'fotokost1658892339.jpg', NULL, '', '', '', '', '2022-07-11 08:31:21', '2022-07-31 04:54:09'),
-(6, 'Kamar 6', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Terisi', 'fotokost1658892361.jpg', 'fotokost21658325668.jpg', '', '', '', '', '2022-07-20 14:01:08', '2022-08-02 09:57:32'),
-(9, 'Kamar 7', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Terisi', 'fotokost1658892384.jpg', 'fotokost21658634405.jpg', '', '', '', '', '2022-07-24 03:46:45', '2022-08-02 07:49:44'),
-(11, 'Kamar 8', 'Putri', 'AC, Lemari, Kasur, Meja Belajar', '4x4', 50000, 'Tersedia', 'fotokost1659436399.jpg', 'fotokost21659436029.jpg', 'fotokost31659436029.jpg', 'fotokost41659436029.jpg', 'fotokost51659436029.jpg', 'fotokost61659436029.jpg', '2022-08-02 10:27:09', '2022-08-02 10:39:26');
+(1, 'Kamar 1', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Terisi', 'fotokost1658892169.jpg', 'fotokost21658634405.jpg', 'fotokost31659444904.jpg', 'fotokost41659444904.jpg', 'fotokost51659444904.jpg', 'fotokost61659436029.jpg', '2022-07-11 08:28:00', '2022-07-31 09:24:50'),
+(2, 'Kamar 2', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Tersedia', 'fotokost1658892198.jpg', 'fotokost21658634405.jpg', 'fotokost31659444904.jpg', 'fotokost41659444904.jpg', 'fotokost51659444904.jpg', 'fotokost61659444904.jpg', '2022-07-11 08:29:08', '2022-08-02 12:52:28'),
+(3, 'Kamar 3', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Terisi', 'fotokost1658892274.jpg', 'fotokost21658634405.jpg', 'fotokost31659444904.jpg', 'fotokost41659444904.jpg', 'fotokost51659444904.jpg', 'fotokost61659444904.jpg', '2022-07-11 08:29:51', '2022-08-02 12:41:45'),
+(4, 'Kamar 4', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Terisi', 'fotokost1658892312.jpg', 'fotokost21658634405.jpg', 'fotokost31659444904.jpg', 'fotokost41659444904.jpg', 'fotokost51659444904.jpg', 'fotokost61659444904.jpg', '2022-07-11 08:30:30', '2022-07-27 03:25:12'),
+(5, 'Kamar 5', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Tersedia', 'fotokost1658892339.jpg', 'fotokost21658634405.jpg', 'fotokost31659444904.jpg', 'fotokost41659444904.jpg', 'fotokost51659444904.jpg', 'fotokost61659444904.jpg', '2022-07-11 08:31:21', '2022-07-31 04:54:09'),
+(6, 'Kamar 6', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Tersedia', 'fotokost1658892361.jpg', 'fotokost21658634405.jpg', 'fotokost31659444904.jpg', 'fotokost41659444904.jpg', 'fotokost51659444904.jpg', 'fotokost61659444904.jpg', '2022-07-20 14:01:08', '2022-08-02 09:57:32'),
+(9, 'Kamar 7', 'Putri', 'kasur, lemari, meja kecil, kipas angin', '5 x 5 meter', 500000, 'Tersedia', 'fotokost1658892384.jpg', 'fotokost21658634405.jpg', 'fotokost31659444904.jpg', 'fotokost41659444904.jpg', 'fotokost51659444904.jpg', 'fotokost61659444904.jpg', '2022-07-24 03:46:45', '2022-08-02 07:49:44');
 
 -- --------------------------------------------------------
 
@@ -223,13 +222,7 @@ INSERT INTO `pembayaran` (`id`, `user_id`, `kost_id`, `fas_id`, `nama_penyewa`, 
 (7, 6, 2, NULL, 'Putri', '2022-07-22', '2022-07-24', '2022-07-22', NULL, 'bukti1657617941.jpg', 'Diterima(Booking)', NULL, '2022-07-22 09:25:30', '2022-07-22 09:25:57'),
 (8, 6, 2, 1, 'Putri', '2022-07-22', '2022-07-24', '2022-07-22', '2022-08-22', 'bukti1657617983.jpg', 'Diterima', '7', '2022-07-22 09:26:09', '2022-07-22 09:26:32'),
 (9, 9, 3, NULL, 'Mila Putri Daniati', '2022-07-25', '2022-07-27', '2022-07-25', NULL, 'bukti1658899456.jpg', 'Diterima(Booking)', NULL, '2022-07-25 05:24:04', '2022-07-25 05:24:42'),
-(10, 9, 3, 4, 'Mila Putri Daniati', '2022-07-25', '2022-07-27', '2022-07-25', '2022-08-25', 'bukti1658899525.jpg', 'Diterima', '7', '2022-07-25 05:25:16', '2022-07-25 05:25:32'),
-(74, 14, 9, NULL, 'ainun', '2022-08-02', '2022-08-04', '2022-08-02', NULL, 'bukti1659426609.jpg', 'Diterima(Booking)', NULL, '2022-08-02 07:49:44', '2022-08-02 07:50:39'),
-(75, 14, 9, NULL, 'ainun', '2022-08-02', '2022-08-04', '2022-08-02', '2022-09-02', 'bukti1659426669.jpg', 'Diterima', '08', '2022-08-02 07:50:57', '2022-08-02 07:51:20'),
-(76, 14, 9, NULL, 'ainun', '2022-08-02', '2022-08-04', '2022-08-02', NULL, NULL, 'Menunggu Konfirmasi', '09', '2022-08-02 07:50:57', '2022-08-02 07:50:57'),
-(77, 14, 9, NULL, 'ainun', '2022-08-02', '2022-08-04', '2022-08-02', NULL, NULL, 'Menunggu Konfirmasi', '10', '2022-08-02 07:50:57', '2022-08-02 07:50:57'),
-(78, 8, 6, NULL, 'eka', '2022-08-02', '2022-08-05', '2022-08-02', NULL, 'bukti1659434262.jpg', 'Diterima(Booking)', NULL, '2022-08-02 09:57:32', '2022-08-02 09:57:51'),
-(79, 8, 11, NULL, 'eka', '2022-08-02', '2022-08-02', '2022-08-02', NULL, NULL, 'Booking', NULL, '2022-08-02 10:39:26', '2022-08-02 10:39:26');
+(10, 9, 3, 4, 'Mila Putri Daniati', '2022-07-25', '2022-07-27', '2022-07-25', '2022-08-25', 'bukti1658899525.jpg', 'Diterima', '7', '2022-07-25 05:25:16', '2022-07-25 05:25:32');
 
 -- --------------------------------------------------------
 
@@ -508,7 +501,7 @@ ALTER TABLE `komplain`
 -- AUTO_INCREMENT untuk tabel `kost`
 --
 ALTER TABLE `kost`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`

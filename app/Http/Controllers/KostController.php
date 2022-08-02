@@ -151,9 +151,7 @@ class KostController extends Controller
                 ]);
         } elseif (!empty($request->file('fotokost2'))) {
             // unlink(public_path('images') . '/' . $kost->fotokost);
-            $images = $request->file('fotokost');
-            $imagefotokost = 'fotokost' . time() . '.' . $images->extension();
-            $images->move(public_path('images'), $imagefotokost);
+
 
             // unlink(public_path('images') . '/' . $kost->fotokost2);
             $images = $request->file('fotokost2');
@@ -167,40 +165,17 @@ class KostController extends Controller
                     'fasilitas' => $request->fasilitas,
                     'harga' => $request->harga,
                     'keterangan' => $request->keterangan,
-                    'fotokost' => $imagefotokost,
+
                     'fotokost2' => $imagefotokost2
                 ]);
         } elseif (!empty($request->file('fotokost3'))) {
             // unlink(public_path('images') . '/' . $kost->fotokost);
-            $images = $request->file('fotokost');
-            $imagefotokost = 'fotokost' . time() . '.' . $images->extension();
-            $images->move(public_path('images'), $imagefotokost);
 
-            if (!empty($request->file('fotokost2'))) {
-                # code...
-                // unlink(public_path('images') . '/' . $kost->fotokost2);
-                $images = $request->file('fotokost2');
-                $imagefotokost2 = 'fotokost2' . time() . '.' . $images->extension();
-                $images->move(public_path('images'), $imagefotokost2);
-            }
 
             // unlink(public_path('images') . '/' . $kost->fotokost3);
             $images = $request->file('fotokost3');
             $imagefotokost3 = 'fotokost3' . time() . '.' . $images->extension();
             $images->move(public_path('images'), $imagefotokost3);
-
-            if ($request->file('fotokost2') == null) {
-                Kost::where('id', $kost->id)
-                    ->update([
-                        'nama_kost' => $request->nama_kost,
-                        'kategori_kost' => $request->kategori_kost,
-                        'fasilitas' => $request->fasilitas,
-                        'harga' => $request->harga,
-                        'keterangan' => $request->keterangan,
-                        'fotokost' => $imagefotokost,
-                        'fotokost2' => $imagefotokost3
-                    ]);
-            }
 
             Kost::where('id', $kost->id)
                 ->update([
@@ -209,9 +184,64 @@ class KostController extends Controller
                     'fasilitas' => $request->fasilitas,
                     'harga' => $request->harga,
                     'keterangan' => $request->keterangan,
-                    'fotokost' => $imagefotokost,
-                    'fotokost2' => $imagefotokost2,
+
                     'fotokost3' => $imagefotokost3
+                ]);
+        } elseif (!empty($request->file('fotokost4'))) {
+            // unlink(public_path('images') . '/' . $kost->fotokost);
+
+
+            // unlink(public_path('images') . '/' . $kost->fotokost4);
+            $images = $request->file('fotokost4');
+            $imagefotokost4 = 'fotokost4' . time() . '.' . $images->extension();
+            $images->move(public_path('images'), $imagefotokost4);
+
+            Kost::where('id', $kost->id)
+                ->update([
+                    'nama_kost' => $request->nama_kost,
+                    'kategori_kost' => $request->kategori_kost,
+                    'fasilitas' => $request->fasilitas,
+                    'harga' => $request->harga,
+                    'keterangan' => $request->keterangan,
+                    'fotokost4' => $imagefotokost4
+                ]);
+        } elseif (!empty($request->file('fotokost5'))) {
+            // unlink(public_path('images') . '/' . $kost->fotokost);
+
+
+            // unlink(public_path('images') . '/' . $kost->fotokost5);
+            $images = $request->file('fotokost5');
+            $imagefotokost5 = 'fotokost5' . time() . '.' . $images->extension();
+            $images->move(public_path('images'), $imagefotokost5);
+
+            Kost::where('id', $kost->id)
+                ->update([
+                    'nama_kost' => $request->nama_kost,
+                    'kategori_kost' => $request->kategori_kost,
+                    'fasilitas' => $request->fasilitas,
+                    'harga' => $request->harga,
+                    'keterangan' => $request->keterangan,
+
+                    'fotokost5' => $imagefotokost5
+                ]);
+        } elseif (!empty($request->file('fotokost6'))) {
+            // unlink(public_path('images') . '/' . $kost->fotokost);
+
+
+            // unlink(public_path('images') . '/' . $kost->fotokost6);
+            $images = $request->file('fotokost6');
+            $imagefotokost6 = 'fotokost6' . time() . '.' . $images->extension();
+            $images->move(public_path('images'), $imagefotokost6);
+
+            Kost::where('id', $kost->id)
+                ->update([
+                    'nama_kost' => $request->nama_kost,
+                    'kategori_kost' => $request->kategori_kost,
+                    'fasilitas' => $request->fasilitas,
+                    'harga' => $request->harga,
+                    'keterangan' => $request->keterangan,
+
+                    'fotokost6' => $imagefotokost6
                 ]);
         }
         Kost::where('id', $kost->id)
