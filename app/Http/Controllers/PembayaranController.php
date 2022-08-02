@@ -284,7 +284,7 @@ class PembayaranController extends Controller
                     'status_bayar' => $request->status,
                     'tgl_bayar' => $tgl_bayar->toDateString(),
                     // 'bulan' => $tgl_bayar->isoFormat('MMMM'),
-                    'tenggat' => $tgl_bayar->addMonth()->toDateString()
+                    'tenggat' => $tgl_bayar->month($request->bulan)->addMonth()->toDateString()
                 ]);
             return redirect('/pembayaran')->with('toast_success', 'Pembayaran Diterima!');
         }
