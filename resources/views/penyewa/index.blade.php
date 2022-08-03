@@ -44,7 +44,7 @@
                                                     <td>{{$data->name}}</td>
                                                     <td>{{$data->nama_kost}}</td>
                                                     @if ($data->status_bayar == 'Diterima')
-                                                    <td>{{ date('d-m-Y', strtotime($data->tgl_bayar. ' + 1 months')) }}</td>
+                                                    <td>{{ date('d-m-Y', strtotime($data->tenggat. ' + 1 months')) }}</td>
                                                     @elseif($data->status_bayar == 'Diterima(Booking)' || $data->status_bayar == 'Booking')
                                                     <td>Booking ({{ date('d-m-Y', strtotime($data->tgl_bayar. ' + 1 weeks')) }})</td>
                                                     @else
