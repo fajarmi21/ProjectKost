@@ -23,7 +23,7 @@ class PenyewaController extends Controller
         $penyewa = Penyewa::all();
         $kamar = DB::select('SELECT *
             FROM pembayaran p1
-					 INNER JOIN
+            INNER JOIN
             (
                 SELECT max(id) StatusBayar, kost_id
                 FROM pembayaran

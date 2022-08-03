@@ -52,7 +52,9 @@ class BookingController extends Controller
         // $images = $request->file('bukti_dp');
         // $imagebukti_dp = 'bukti_dp' . time() . '.' . $images->extension();
         // $images->move(public_path('images'), $imagebukti_dp);
-
+        // dd($request->tgl_booking);
+        // dd(Carbon::now()->createFromFormat('Y-m-d', $request->tgl_booking)->toDateTimeString());
+        Carbon::useMonthsOverflow(false);
         Kost::where('id', $id)
             ->update([
                 'statuskost' => $request->statuskost
@@ -67,17 +69,17 @@ class BookingController extends Controller
             $pembayaran->user_id = $request->user_id;
             $pembayaran->kost_id = $request->kost_id;
             $pembayaran->nama_penyewa = $request->nama_penyewa;
-            $pembayaran->tgl_masuk = $request->tgl_masuk;
-            $pembayaran->tgl_booking = $request->tgl_booking;
+            $pembayaran->tgl_masuk = Carbon::now()->createFromFormat('Y-m-d', $request->tgl_masuk)->toDateTimeString();
+            $pembayaran->tgl_booking = Carbon::now()->createFromFormat('Y-m-d', $request->tgl_booking)->toDateTimeString();
             $pembayaran->status_bayar = $request->status_bayar;
-            $pembayaran->tgl_bayar = $request->tgl_booking;
+            $pembayaran->tgl_bayar = Carbon::now()->createFromFormat('Y-m-d', $request->tgl_booking)->toDateTimeString();
             $pembayaran->save();
             $pembayaran->id;
         } else {
             for($i = 0; $i < count($input['fas_id']); $i++){
                 $ids[] = Pembayaran::insertGetId($request->except(['fas_id','_token','statuskost'])+[
                     'fas_id' => $input['fas_id'][$i],
-                    'tgl_bayar' => $request->tgl_booking
+                    'tgl_bayar' => Carbon::now()->createFromFormat('Y-m-d', $request->tgl_booking)->toDateTimeString()
                 ]);
             }
             $pembayaran = Pembayaran::whereIn('id', $ids)->first();

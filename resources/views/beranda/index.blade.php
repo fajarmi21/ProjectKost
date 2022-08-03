@@ -544,7 +544,7 @@
                 var hours = Math.floor((distance % _day) / _hour);
                 var minutes = Math.floor((distance % _hour) / _minute);
                 var seconds = Math.floor((distance % _minute) / _second);
-                document.getElementById(id).innerHTML = '<br><blockquote><p>Mohon maaf Anda belum membayar, jika dalam waktu <b>'+ hours + ' jam</b> atau maksimal tanggal (' + end.toLocaleDateString('id') + ') belum melakukan pembayaran maka data booking anda akan dihapus. Terima Kasih</p></blockquote>';
+                document.getElementById(id).innerHTML = '<br><blockquote><p>Mohon maaf Anda belum membayar, jika dalam waktu <b>'+ hours + ' jam '+ minutes + ' menit</b> atau maksimal tanggal (' + end.toLocaleDateString('id') + ') belum melakukan pembayaran maka data booking anda akan dihapus. Terima Kasih</p></blockquote>';
             } else if (mathdistance < 0) {
 
                 clearInterval(timer);

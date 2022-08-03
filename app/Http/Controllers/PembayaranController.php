@@ -118,7 +118,7 @@ class PembayaranController extends Controller
             $pembayaran->tgl_masuk = $request->tgl_masuk;
             $pembayaran->tgl_booking = $request->tgl_booking;
             $pembayaran->status_bayar = "Menunggu Konfirmasi";
-            $pembayaran->tgl_bayar = Carbon::now()->toDateString();
+            $pembayaran->tgl_bayar = Carbon::now()->toDateTimeString();
             $pembayaran->bulan = Carbon::now()->addMonth($i)->isoFormat('MM');
             $pembayaran->save();
             foreach ($fas as $key => $value) {
@@ -259,6 +259,7 @@ class PembayaranController extends Controller
 
     public function konfirmasiadmin(Request $request, $id)
     {
+        Carbon::useMonthsOverflow(false);
         if ($request->status == 'Ditolak') {
             Pembayaran::where('id', $id)
                 ->update([
@@ -282,9 +283,9 @@ class PembayaranController extends Controller
             Pembayaran::where('id', $id)
                 ->update([
                     'status_bayar' => $request->status,
-                    'tgl_bayar' => $tgl_bayar->toDateString(),
+                    'tgl_bayar' => $tgl_bayar->toDateTimeString(),
                     // 'bulan' => $tgl_bayar->isoFormat('MMMM'),
-                    'tenggat' => $tgl_bayar->month($request->bulan)->addMonth()->toDateString()
+                    'tenggat' => $tgl_bayar->month($request->bulan)->addMonth()->toDateTimeString()
                 ]);
             return redirect('/pembayaran')->with('toast_success', 'Pembayaran Diterima!');
         }

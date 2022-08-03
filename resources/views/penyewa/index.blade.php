@@ -46,7 +46,7 @@
                                                     @if ($data->status_bayar == 'Diterima')
                                                     <td>{{ date('d-m-Y', strtotime($data->tenggat. ' + 1 months')) }}</td>
                                                     @elseif($data->status_bayar == 'Diterima(Booking)' || $data->status_bayar == 'Booking')
-                                                    <td>Booking ({{ date('d-m-Y', strtotime($data->tgl_bayar. ' + 1 weeks')) }})</td>
+                                                    <td>Booking ({{ date('d-m-Y', strtotime($data->tgl_bayar. ' + 1 days')) }})</td>
                                                     @else
                                                     <td>{{ $data->status_bayar }} ({{ Carbon\Carbon::now()->month($data->bulan)->addMonth(1)->format('d-m-Y') }})</td>
                                                     @endif
