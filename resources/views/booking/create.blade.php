@@ -42,7 +42,7 @@
                                             <h3 style="font-weight: bold; color:crimson"> Catatan : </h3>
                                         </ul>
                                         <ul style="font-weight: bold">DP yang harus dibayar adalah : 50.000</ul>
-                                        <ul style="font-weight: bold">Batas waktu pembayaran adalah 1 minggu</ul>
+                                        <ul style="font-weight: bold">Batas waktu pembayaran adalah 1 hari</ul>
                                         <ul style="font-weight: bold">Silahkan transfer pada rekening berikut :</ul>
                                         <ul style="font-weight: bold">Nama : Suyatik</ul>
                                         <ul style="font-weight: bold">No Rekening : 033278142</ul>
