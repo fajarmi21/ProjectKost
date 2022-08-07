@@ -45,10 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('booking','App\Http\Controllers\BookingController');
     Route::resource('dashboard', 'App\Http\Controllers\DashboardController');
     Route::resource('pembayaran', 'App\Http\Controllers\PembayaranController');
-    Route::get('/pembayaran/{id}/{bln}', 'App\Http\Controllers\PembayaranController@show')->name('pembayaran.showBln');
     Route::get('/pembayaran/create/{id}', 'App\Http\Controllers\PembayaranController@create')->name('pembayaran.create');
     Route::post('/pembayaran/konfirmasi/{id}', 'App\Http\Controllers\PembayaranController@konfirmasi');
     Route::post('/pembayaran/konfirmasi/admin/{id}', 'App\Http\Controllers\PembayaranController@konfirmasiadmin')->name('admin.konfirmasi');
+    Route::get('/pembayaran/{id}/{bln}', 'App\Http\Controllers\PembayaranController@show')->name('pembayaran.showBln');
     Route::resource('komplain','App\Http\Controllers\KomplainController');
     Route::post('/komplain/konfirmasi/{id}', 'App\Http\Controllers\KomplainController@konfirmasi')->name('komplain.konfirmasi');
     Route::resource('kost','App\Http\Controllers\KostController');
