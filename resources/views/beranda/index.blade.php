@@ -575,7 +575,7 @@
                     document.getElementById(id).innerHTML += hours + ' jam ';
                     document.getElementById(id).innerHTML += minutes + ' menit ';
                     document.getElementById(id).innerHTML += seconds + ' detik';
-                    document.getElementById(id).innerHTML += '<br>Silahkan melakukan pembayaran untuk bulan selanjutnya sebelum tanggal : ' + end.toLocaleDateString('id') + '<br>Batas berakhir sewa pada tanggal : ' + timeEnd.toLocaleDateString('id');
+                    document.getElementById(id).innerHTML += '<br>Silahkan melakukan pembayaran untuk bulan selanjutnya sebelum tanggal : ' + end.toLocaleDateString('id');
                 // }
             }
         }

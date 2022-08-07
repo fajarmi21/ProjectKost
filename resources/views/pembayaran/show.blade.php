@@ -54,11 +54,11 @@
                                 @foreach(explode(",", getMFasilitas($pembayaran->id)->cnt) as $row)
                                     @php
                                         $item = explode(":", $row);
-                                        $total_biaya += $item[2];
+                                        $total_biaya += $item[1] * $item[2];
                                     @endphp
                                     <div class="col-4">{{$item[0]}}</div>
                                     <div class="col-4">{{$item[1]}} buah</div>
-                                    <div class="col-4" style="text-align: end">Rp {{ number_format($item[2], 0 ," ," ,".") }}</div>
+                                    <div class="col-4" style="text-align: end">Rp {{ number_format($item[1] * $item[2], 0 ," ," ,".") }}</div>
                                 @endforeach
                             @endif
                             <div class="col-4"></div>

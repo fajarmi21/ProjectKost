@@ -28,7 +28,6 @@
                                                     <th scope='col'>No</th>
                                                     <th scope='col'>Nama</th>
                                                     <th scope='col'>Kamar Kost</th>
-                                                    <th scope="col">Tanggal Berakhir</th>
                                                     <th scope="col">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -49,17 +48,6 @@
                                                             Belum Sewa
                                                         @endif
                                                     </td>
-                                                    @if ($data->status == 'sewa')
-                                                        @if ($data->status_bayar == 'Diterima')
-                                                        <td>{{ date('d-m-Y', strtotime($data->tenggat. ' + 1 months')) }}</td>
-                                                        @elseif($data->status_bayar == 'Diterima(Booking)' || $data->status_bayar == 'Booking')
-                                                        <td>Booking ({{ date('d-m-Y', strtotime($data->tgl_bayar. ' + 1 days')) }})</td>
-                                                        @else
-                                                        <td>{{ $data->status_bayar }} ({{ Carbon\Carbon::now()->month($data->bulan)->addMonth(1)->format('d-m-Y') }})</td>
-                                                        @endif
-                                                    @else
-                                                    <td>-</td>
-                                                    @endif
                                                     <td>
                                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('penyewa.destroy', $data->user_id) }}" method="POST">
                                                             <a href="{{ route('penyewa.show', $data->user_id)}}" class="btn btn-primary mb-3"><i class=" fas fa-file"></i>Detail</a>
