@@ -192,16 +192,9 @@ class PembayaranController extends Controller
             return view('pembayaran.show', compact('pembayaran', 'cek'));
         } elseif (Auth::user()->role_id == '1') {
             $cek = Pembayaran::find($id);
-            if (empty($cek->fas_id)) {
-                $pembayaran = Pembayaran::join('kost', 'kost.id', '=', 'pembayaran.kost_id')
-                    ->where('pembayaran.id', $cek->id)
-                    ->select('pembayaran.*', 'kost.nama_kost')->first();
-            } else {
-                $pembayaran = Pembayaran::join('kost', 'kost.id', '=', 'pembayaran.kost_id')
-                    ->join('fasilitas', 'fasilitas.id', '=', 'pembayaran.fas_id')
-                    ->where('pembayaran.id', $cek->id)
-                    ->select('pembayaran.*', 'kost.nama_kost', 'fasilitas.fasilitas', 'fasilitas.harga')->first();
-            }
+            $pembayaran = Pembayaran::join('kost', 'kost.id', '=', 'pembayaran.kost_id')
+            ->where('pembayaran.id', $cek->id)
+            ->select('pembayaran.*', 'kost.nama_kost', 'kost.harga')->first();
             return view('pembayaran.show', compact('pembayaran', 'cek'));
         }
     }

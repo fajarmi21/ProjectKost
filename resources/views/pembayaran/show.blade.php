@@ -6,7 +6,7 @@
 @section('content')
 <main id="main">
     <!-- ======= Breadcrumbs ======= -->
-    {{-- {{ dd(getMFasilitas($pembayaran->id)->cnt) }} --}}
+    {{-- {{ dd(getMFasilitas($pembayaran->id)) }} --}}
     <section class="content">
         <div class="container-fluid">
             <div class="row" style="margin-top:20px;">
@@ -50,18 +50,17 @@
                             <div class="col-4">Biaya Kost</div>
                             <div class="col-4">{{ count(explode(',', $pembayaran->bulan)) }} bulan</div>
                             <div class="col-4" style="text-align: end">Rp {{ number_format(count(explode(',', $pembayaran->bulan)) * $pembayaran->harga, 0 ," ," ,".") }}</div>
-                            @foreach(explode(",", getMFasilitas($pembayaran->id)->cnt) as $row)
-                            {{-- @php
-                            $total_biaya += $row->harga;
-                            @endphp --}}
-                                @php
-                                    $item = explode(":", $row);
-                                    $total_biaya += $item[2];
-                                @endphp
-                                <div class="col-4">{{$item[0]}}</div>
-                                <div class="col-4">{{$item[1]}} buah</div>
-                                <div class="col-4" style="text-align: end">Rp {{ number_format($item[2], 0 ," ," ,".") }}</div>
-                            @endforeach
+                            @if (getMFasilitas($pembayaran->id)->cnt != null)
+                                @foreach(explode(",", getMFasilitas($pembayaran->id)->cnt) as $row)
+                                    @php
+                                        $item = explode(":", $row);
+                                        $total_biaya += $item[2];
+                                    @endphp
+                                    <div class="col-4">{{$item[0]}}</div>
+                                    <div class="col-4">{{$item[1]}} buah</div>
+                                    <div class="col-4" style="text-align: end">Rp {{ number_format($item[2], 0 ," ," ,".") }}</div>
+                                @endforeach
+                            @endif
                             <div class="col-4"></div>
                             <div class="col-4"><b>Total</b></div>
                             <div class="col-4" style="text-align: end"><b>Rp {{ number_format($total_biaya, 0 ," ," ,".") }}</b></div>
