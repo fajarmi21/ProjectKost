@@ -6,7 +6,7 @@
 @section('content')
 <main id="main">
     <!-- ======= Breadcrumbs ======= -->
-    {{-- {{ dd(getFasilitas('45')) }} --}}
+    {{-- {{ dd(getMFasilitas($pembayaran->id)->cnt) }} --}}
     <section class="content">
         <div class="container-fluid">
             <div class="row" style="margin-top:20px;">
@@ -20,46 +20,54 @@
                     <div class="project-info-box" style=" margin: 15px 0; background-color: #fff; padding: 30px 40px; border-radius: 5px;">
                         <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Nama Pelanggan: </b>{{$pembayaran->nama_penyewa}}</p>
                         <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Kamar yang ditempati: </b>{{$pembayaran->nama_kost}}</p>
-                        <!-- <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Tanggal Bayar: </b>{{$pembayaran->tgl_bayar}}</p> -->
-                        <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Pembayaran untuk bulan: </b>{{Carbon\Carbon::now()->month($pembayaran->bulan)->isoFormat('MMMM')}}</p>
-                        @php
-                        $harga_kost = $pembayaran->kost->harga;
-                        $total_fasilitas = $total_biaya = 0;
-                        $total_biaya = $harga_kost
-                        @endphp
-                        {{-- @if(empty($cek->fas_id))
-                        <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Total Pembayaran: </b>Rp. {{ $harga_kost}}</p>
-                        @else
-                        <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Total Pembayaran: </b>Rp. {{ $total_biaya}}</p>
-                        @endif --}}
+                        <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Pembayaran untuk bulan: </b>
+                            @if (count(explode(',', $pembayaran->bulan)) != 1)
+                                @php
+                                $no = 1;
+                                $count = count(explode(',', $pembayaran->bulan));
+                                @endphp
+                                @foreach(explode(',', $pembayaran->bulan) as $bln)
+                                @if ($no == $count)
+                                {{Carbon\Carbon::now()->month($bln)->isoFormat('MMMM')}}
+                                @else
+                                {{Carbon\Carbon::now()->month($bln)->isoFormat('MMMM')}} ,
+                                @php $no++ @endphp
+                                @endif
+                                @endforeach
+                            @else
+                                {{Carbon\Carbon::now()->month($pembayaran->bulan)->isoFormat('MMMM')}}
+                            @endif
+                        </p>
                         <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Status: </b>{{$pembayaran->status_bayar}}</p>
                         <p>
-                            <div class="row">
-                                <div class="col-12"><b>Detail Pembayaran: </b></div>
-                                <div class="col-6">Harga per bulan</div>
-                                <div class="col-6" style="text-align: end">Rp. {{ $harga_kost }}</div>
-                                @foreach(getFasilitas($pembayaran->id ) as $row)
+                        <div class="row">
+                            @php
+                            $harga_kost = count(explode(',', $pembayaran->bulan)) * $pembayaran->harga;
+                            $total_fasilitas = $total_biaya = 0;
+                            $total_biaya = $harga_kost
+                            @endphp
+                            <div class="col-12"><b>Detail Pembayaran: </b></div>
+                            <div class="col-4">Biaya Kost</div>
+                            <div class="col-4">{{ count(explode(',', $pembayaran->bulan)) }} bulan</div>
+                            <div class="col-4" style="text-align: end">Rp {{ number_format(count(explode(',', $pembayaran->bulan)) * $pembayaran->harga, 0 ," ," ,".") }}</div>
+                            @foreach(explode(",", getMFasilitas($pembayaran->id)->cnt) as $row)
+                            {{-- @php
+                            $total_biaya += $row->harga;
+                            @endphp --}}
                                 @php
-                                $total_biaya += $row->harga;
+                                    $item = explode(":", $row);
+                                    $total_biaya += $item[2];
                                 @endphp
-                                <div class="col-6">{{$row->fasilitas}}</div>
-                                <div class="col-6" style="text-align: end">Rp. {{$row->harga}}</div>
-                                @endforeach
-                                <div class="col-6"><b>Total</b></div>
-                                <div class="col-6" style="text-align: end"><b>Rp. {{$total_biaya}}</b></div>
-                            </div>
-                            <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"></p>
+                                <div class="col-4">{{$item[0]}}</div>
+                                <div class="col-4">{{$item[1]}} buah</div>
+                                <div class="col-4" style="text-align: end">Rp {{ number_format($item[2], 0 ," ," ,".") }}</div>
+                            @endforeach
+                            <div class="col-4"></div>
+                            <div class="col-4"><b>Total</b></div>
+                            <div class="col-4" style="text-align: end"><b>Rp {{ number_format($total_biaya, 0 ," ," ,".") }}</b></div>
+                        </div>
+                        <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"></p>
                         </p>
-                        {{-- <b>Fasilitas :</b>
-                        @foreach(listsFasilitas($pembayaran->tgl_bayar ) as $row)
-                        {{ $loop->first ? '' : ', ' }}
-                        <span style="margin-bottom: 15px; padding-bottom: 15px; solid #d5dadb;">{{$row->fasilitas}}</span>
-                        @endforeach --}}
-                        {{-- @php
-                        $total_fasilitas += $row->fasilitas->harga;
-                        @endphp --}}
-
-                        <!-- <p class="mb-0"><b>Budget:</b> $500</p> -->
                     </div><!-- / project-info-box -->
 
                     <div class="project-info-box mt-0 mb-0">

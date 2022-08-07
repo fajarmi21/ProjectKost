@@ -21,7 +21,14 @@ class PenyewaController extends Controller
     public function index()
     {
         $penyewa = Penyewa::all();
-        $kamar = DB::select('SELECT *
+        $kamar = DB::select('
+        SELECT name, nama_kost, status_bayar, status, tenggat, tgl_bayar, bulan, pembayaran.user_id
+        FROM users
+        JOIN penyewa ON users.id = penyewa.user_id
+        LEFT JOIN pembayaran ON users.id = pembayaran.user_id
+        JOIN kost ON pembayaran.kost_id = kost.id
+        WHERE kost.nama_kost NOT IN (
+            SELECT nama_kost
             FROM pembayaran p1
             INNER JOIN
             (
@@ -34,24 +41,42 @@ class PenyewaController extends Controller
             JOIN users as u ON p1.user_id = u.id
             JOIN penyewa as p ON p1.user_id = p.user_id
             AND p1.id = p2.StatusBayar
-	        AND k.statuskost = "Terisi"
-            GROUP BY p1.kost_id');
-        return view('penyewa.index', ['penyewa'=>$penyewa,'kamar'=>$kamar]);
+            AND k.statuskost = "Terisi"
+            GROUP BY p1.kost_id
+        )
+        GROUP BY users.id
+        UNION
+        SELECT name, nama_kost, status_bayar, status, tenggat, tgl_bayar, bulan, p1.user_id
+        FROM pembayaran p1
+        INNER JOIN
+        (
+            SELECT max(id) StatusBayar, kost_id
+            FROM pembayaran
+            GROUP BY kost_id
+        ) p2
+        ON p1.kost_id = p2.kost_id
+        JOIN kost as k ON p1.kost_id = k.id
+        JOIN users as u ON p1.user_id = u.id
+        JOIN penyewa as p ON p1.user_id = p.user_id
+        AND p1.id = p2.StatusBayar
+        AND k.statuskost = "Terisi"
+        GROUP BY p1.kost_id');
+        return view('penyewa.index', ['penyewa' => $penyewa, 'kamar' => $kamar]);
     }
 
     public function pengunjung()
     {
         $penyewa = User::all();
 
-        return view('halamanutama.pengunjung', ['penyewa'=>$penyewa]);
+        return view('halamanutama.pengunjung', ['penyewa' => $penyewa]);
     }
 
     public function indexpengunjung()
     {
-        $pengunjung = User::join('penyewa','penyewa.user_id','=','users.id')
-        ->where('role_id','4')
-        ->select('users.*','penyewa.alamat')->get();
-        return view('penyewa.indexpengunjung',compact('pengunjung'));
+        $pengunjung = User::join('penyewa', 'penyewa.user_id', '=', 'users.id')
+            ->where('role_id', '4')
+            ->select('users.*', 'penyewa.alamat')->get();
+        return view('penyewa.indexpengunjung', compact('pengunjung'));
     }
 
     /**
@@ -63,7 +88,7 @@ class PenyewaController extends Controller
     {
         $user = User::all();
 
-        return view('penyewa.create', ['user'=>$user]);
+        return view('penyewa.create', ['user' => $user]);
     }
 
     /**
@@ -75,8 +100,8 @@ class PenyewaController extends Controller
     public function store(Request $request)
     {
         $images = $request->file('ktp');
-        $imageKTP = 'ktp'.time().'.'.$images->extension();
-        $images->move(public_path('images'),$imageKTP);
+        $imageKTP = 'ktp' . time() . '.' . $images->extension();
+        $images->move(public_path('images'), $imageKTP);
 
         $penyewa = new Penyewa;
         $penyewa->user_id = $request->user_id;
@@ -99,9 +124,9 @@ class PenyewaController extends Controller
      */
     public function show($id)
     {
-        $show = Penyewa::where('user_id',$id)->first();
-        $user = User::where('id',$id)->first();
-        return view('penyewa.show', ['show' => $show,'user' => $user]);
+        $show = Penyewa::where('user_id', $id)->first();
+        $user = User::where('id', $id)->first();
+        return view('penyewa.show', ['show' => $show, 'user' => $user]);
     }
 
     public function konfirmasi(Request $request, $id)
@@ -123,15 +148,15 @@ class PenyewaController extends Controller
         $penyewa = Auth::user()->id;
 
         $data = Penyewa::where('user_id', $penyewa)->first();
-// dd($datas);
-        return view('beranda.updateprofil', ['penyewa'=>$data]);
+        // dd($datas);
+        return view('beranda.updateprofil', ['penyewa' => $data]);
     }
 
     public function updateprofil(Request $request)
     {
         $images = $request->file('ktp');
-        $imageKTP = 'ktp'.time().'.'.$images->extension();
-        $images->move(public_path('images'),$imageKTP);
+        $imageKTP = 'ktp' . time() . '.' . $images->extension();
+        $images->move(public_path('images'), $imageKTP);
 
         $penyewa = new Penyewa();
 
@@ -157,7 +182,7 @@ class PenyewaController extends Controller
     {
         $user = User::all();
 
-        return view('penyewa.edit',['penyewa'=>$penyewa, 'user'=>$user]);
+        return view('penyewa.edit', ['penyewa' => $penyewa, 'user' => $user]);
     }
 
     /**
@@ -169,31 +194,30 @@ class PenyewaController extends Controller
      */
     public function update(Request $request, Penyewa $penyewa)
     {
-        if(!empty($request->file('ktp')))
-        {
-            unlink(public_path('images').'/'.$penyewa->ktp);
+        if (!empty($request->file('ktp'))) {
+            unlink(public_path('images') . '/' . $penyewa->ktp);
             $images = $request->file('ktp');
-            $imageKTP = 'ktp'.time().'.'.$images->extension();
-            $images->move(public_path('images'),$imageKTP);
+            $imageKTP = 'ktp' . time() . '.' . $images->extension();
+            $images->move(public_path('images'), $imageKTP);
 
             Penyewa::where('id', $penyewa->id)
-            ->update([
-            'user_id' =>$request->user_id,
-            'ktp' =>$imageKTP,
-            'jenis_kelamin' =>$request->jenis_kelamin,
-            'alamat' =>$request->alamat,
-            'no_hp' =>$request->no_hp,
-            'tgl_lahir' =>$request->tgl_lahir
-            ]);
+                ->update([
+                    'user_id' => $request->user_id,
+                    'ktp' => $imageKTP,
+                    'jenis_kelamin' => $request->jenis_kelamin,
+                    'alamat' => $request->alamat,
+                    'no_hp' => $request->no_hp,
+                    'tgl_lahir' => $request->tgl_lahir
+                ]);
         }
-            Penyewa::where('id', $penyewa->id)
+        Penyewa::where('id', $penyewa->id)
             ->update([
-            'user_id' => $request->user_id,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'alamat' => $request->alamat,
-            'no_hp' => $request->no_hp,
-            'tgl_lahir' => $request->tgl_lahir
-        ]);
+                'user_id' => $request->user_id,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'alamat' => $request->alamat,
+                'no_hp' => $request->no_hp,
+                'tgl_lahir' => $request->tgl_lahir
+            ]);
 
         return redirect('/penyewa')->with('toast_info', 'Data berhasil diubah!');
     }
@@ -208,15 +232,19 @@ class PenyewaController extends Controller
     {
         $ids = Penyewa::where('user_id', $id)->first();
         if ($ids->status == 'sewa') {
-            $cek = Pembayaran::where('user_id', $ids->user_id)->latest()->limit(1)->first();
-            Kost::where('id', $cek->kost_id)
-            ->update([
-            'statuskost' => 'Tersedia'
-            ]);
-            Penyewa::where('user_id', $id)
-            ->update([
-                'status' => 'belum'
-            ]);
+            $cek = Pembayaran::where('user_id', $ids->user_id)->orderBy('id', 'DESC')->limit(1)->first();
+            try {
+                Kost::where('id', $cek->kost_id)
+                    ->update([
+                        'statuskost' => 'Tersedia'
+                    ]);
+                Penyewa::where('user_id', $id)
+                    ->update([
+                        'status' => 'belum'
+                    ]);
+            } catch (\Throwable $th) {
+                dd($th);
+            }
             return redirect('/penyewa')->with('toast_danger', 'Data berhasil dihapus!');
         } else {
             $ids->delete();
@@ -224,8 +252,9 @@ class PenyewaController extends Controller
         }
     }
 
-    public function edit_data(Penyewa $penyewa){
+    public function edit_data(Penyewa $penyewa)
+    {
         // dd($penyewa);
-        return view('beranda.edit', ['penyewa'=>$penyewa]);
+        return view('beranda.edit', ['penyewa' => $penyewa]);
     }
 }

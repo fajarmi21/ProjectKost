@@ -29,6 +29,8 @@
                                                     <th scope='col'>Nama Pelanggan</th>
                                                     <th scope='col'>Tanggal Transfer</th>
                                                     <th scope='col'>Bulan</th>
+                                                    <th scope="col">Tanggal Mulai</th>
+                                                    <th scope="col">Tanggal Berakhir</th>
                                                     <th scope='col'>Status Pembayaran</th>
                                                     <th scope="col">Aksi</th>
                                                 </tr>
@@ -43,7 +45,25 @@
                                                     <td>{{$data->created_at}}</td>
                                                     <td>
                                                         @if (!empty($data->bulan))
-                                                        {{Carbon\Carbon::now()->month($data->bulan)->isoFormat('MMMM')}}
+                                                        {{Carbon\Carbon::now()->month($data->bulan)->isoFormat('MMMM')}}@else
+                                                        -
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($data->status_bayar == 'Diterima' || $data->status_bayar == 'Menunggu Konfirmasi' || $data->status_bayar ==
+                                                        'Sudah Transfer')
+                                                        {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $data->tgl_bayar)->month($data->bulan)->format("d-m-Y")}}
+                                                        @else
+                                                        -
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($data->status_bayar == 'Diterima' || $data->status_bayar == 'Menunggu Konfirmasi' || $data->status_bayar ==
+                                                        'Sudah Transfer')
+                                                        {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s",
+                                                        $data->tgl_bayar)->month($data->bulan)->addMonth(1)->format("d-m-Y")}}
+                                                        @else
+                                                        -
                                                         @endif
                                                     </td>
                                                     <td>{{$data->status_bayar}}</td>

@@ -84,29 +84,14 @@
                                                     value="{{ number_format($pembayaran->kharga, 0 ," ," ,".") }}"
                                                     readonly>
                                             </div>
-                                            {{-- <div class="form-group">
-                                                <label for="fas" style="font-weight: bold;">Fasilitas Tambahan</label>
-                                                <select class="js-example-theme-multiple js-states form-control"
-                                                    id="fas_id" name="fas_id[]" multiple="multiple">
-
-                                                    @if ($pembayaran->fas_id == "")
-                                                    @foreach ($fasilitas as $item)
-                                                    <option value="{{$item->id }}"> {{$item->fasilitas}} -
-                                                        {{$item->harga}}</option>
-                                                    @endforeach
-                                                    @else
-                                                    @foreach ($fasilitas as $item)
-                                                    @if(in_array($item->id, $Idfasilitas))
-                                                    <option value="{{$item->id }}" selected> {{$item->fasilitas}}
-                                                    </option>
-                                                    @else
-                                                    <option value="{{$item->id }}"> {{$item->fasilitas}} -
-                                                        {{$item->harga}}</option>
-                                                    @endif
-                                                    @endforeach
-                                                    @endif
+                                            <div class="form-group">
+                                                <label for="fas" style="font-weight: bold;">Metode Pembayaran</label>
+                                                <select class="js-states form-control"
+                                                    id="mp" name="mp">
+                                                    <option id="1" value="1" selected>Per bulan</option>
+                                                    <option id="2" value="1">Semua</option>
                                                 </select>
-                                            </div> --}}
+                                            </div>
                                             <button type="submit" class="btn btn-primary mt-4"><i
                                                     class="pe-7s-diskette"></i> Simpan Data</button>
                                     </form>
@@ -125,6 +110,8 @@
         $('input[id=numFas]').attr('max', val);
         $('input[id=subtotal]').attr('value', val * {{ $pembayaran->kharga }});
         Total('subtotal', val * {{ $pembayaran->kharga }});
+
+        $('#mp').children('[id="2"]').attr('value', val);
     }
 
     function subTotal(id, val, harga) {

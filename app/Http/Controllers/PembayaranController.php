@@ -157,8 +157,7 @@ class PembayaranController extends Controller
         // }
         // dd('x');
         $pembayaran = Pembayaran::where(['user_id' => $request->user_id, 'status_bayar' => 'Menunggu Konfirmasi'])->groupBy('user_id')->select('pembayaran.*', DB::raw('group_concat(pembayaran.bulan) as bulan'))->first();
-        // dd($pembayaran);
-        return redirect()->route('pembayaran.show', $pembayaran)->with('toast_success', 'Segera Lakukan Pembayaran!!');
+        return redirect()->route('pembayaran.showBln', ['id' => $pembayaran, 'bln' => $request->mp])->with('toast_success', 'Segera Lakukan Pembayaran!!');
     }
 
     /**
@@ -167,19 +166,28 @@ class PembayaranController extends Controller
      * @param  \App\Models\Pembayaran  $pembayaran
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $bln = null)
     {
         if (Auth::user()->role_id == '6') {
             $cek = Pembayaran::find($id);
-            if (empty($cek->fas_id)) {
+            if ($bln != null) {
+                $pembayaran = DB::table('pembayaran')
+                    ->select('nama_kost', 'harga', 'nama_penyewa', 'status_bayar', 'bukti')
+                    ->selectRaw('substring_index(group_concat(pembayaran.id SEPARATOR ", "), ", ", ?) as id', [$bln])
+                    ->selectRaw('substring_index(group_concat(pembayaran.bulan SEPARATOR ", "), ", ", ?) as bulan', [$bln])
+                    ->join('kost', 'kost.id', '=', 'pembayaran.kost_id')
+                    ->where('status_bayar', 'Menunggu Konfirmasi')
+                    ->where('user_id', $cek->user_id)
+                    ->first();
+                // dd($pembayaran);
+            } else{
                 $pembayaran = Pembayaran::join('kost', 'kost.id', '=', 'pembayaran.kost_id')
                     ->where('pembayaran.id', $cek->id)
-                    ->select('pembayaran.*', 'kost.nama_kost')->first();
-            } else {
-                $pembayaran = Pembayaran::join('kost', 'kost.id', '=', 'pembayaran.kost_id')
-                    ->join('fasilitas', 'fasilitas.id', '=', 'pembayaran.fas_id')
-                    ->where('pembayaran.id', $cek->id)
-                    ->select('pembayaran.*', 'kost.nama_kost', 'fasilitas.fasilitas', 'fasilitas.harga')->first();
+                    ->select('pembayaran.*', 'kost.nama_kost', 'kost.harga')->first();
+                // $pembayaran = Pembayaran::join('kost', 'kost.id', '=', 'pembayaran.kost_id')
+                //     ->join('fasilitas', 'fasilitas.id', '=', 'pembayaran.fas_id')
+                //     ->where('pembayaran.id', $cek->id)
+                //     ->select('pembayaran.*', 'kost.nama_kost', 'fasilitas.fasilitas', 'fasilitas.harga')->first();
             }
             return view('pembayaran.show', compact('pembayaran', 'cek'));
         } elseif (Auth::user()->role_id == '1') {
@@ -248,12 +256,14 @@ class PembayaranController extends Controller
         $imagebukti = 'bukti' . time() . '.' . $images->extension();
         $images->move(public_path('images'), $imagebukti);
 
-        Pembayaran::where('id', $id)
+        foreach (explode(',', $id) as $key => $value) {
+            Pembayaran::where('id', $value)
             ->update([
                 'bukti' => $imagebukti,
                 'status_bayar' => $request->status
 
             ]);
+        }
         return redirect('/pembayaran')->with('toast_info', 'Berhasil Melakukan Pembayaran!!');
     }
 
