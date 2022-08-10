@@ -38,7 +38,13 @@
                                 {{Carbon\Carbon::now()->month(explode(';', $pembayaran->bulan)[0])->isoFormat('MMMM')}} {{Carbon\Carbon::now()->year(explode(';', $pembayaran->bulan)[1])->year}}
                             @endif
                         </p>
-                        <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Status: </b>{{$pembayaran->status_bayar}}</p>
+                        <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Status: </b>{{$pembayaran->status_bayar}}                        
+                        </p>
+                        @if (!empty($pembayaran->keterangan))
+                        <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Keterangan: </b>
+                            {{ $pembayaran->keterangan }}
+                        </p>
+                        @endif
                         <p>
                         <div class="row">
                             @php
@@ -71,7 +77,7 @@
 
                     <div class="project-info-box mt-0 mb-0">
                         @if (Auth::user()->role_id == '6')
-                        @if($pembayaran->status_bayar != 'Diterima')
+                        @if($pembayaran->status_bayar != 'Lunas')
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Konfirmasi Pembayaran
@@ -98,7 +104,7 @@
                                                 {{ $message }}
                                             </span>
                                             @enderror
-                                            <input name="status" id="status" value="Sudah Transfer" type="hidden">
+                                            <input name="status" id="status" value="Menunggu Konfirmasi" type="hidden">
                                             <img src="" id="previewbukti" style="max-width: 350px; margin-top: 10px;">
                                         </div>
                                         <div class="modal-footer">
