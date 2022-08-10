@@ -28,6 +28,8 @@
                                                     <th scope='col'>No</th>
                                                     <th scope='col'>Nama</th>
                                                     <th scope='col'>Kamar Kost</th>
+                                                    <th scope="col">Tanggal Mulai</th>
+                                                    <th scope="col">Tanggal Berakhir</th>
                                                     <th scope="col">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -45,8 +47,15 @@
                                                         @if ($data->status == 'sewa')
                                                             {{$data->nama_kost}}
                                                         @else
-                                                            Belum Sewa
+                                                            Keluar
                                                         @endif
+                                                    </td>
+                                                    <td>
+                                                        {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $data->tgl_bayar)->month($data->bulan)->format("d-m-Y")}}
+                                                    </td>
+                                                    <td>
+                                                        {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s",
+                                                        $data->tgl_bayar)->month($data->bulan)->addMonth(1)->format("d-m-Y")}}
                                                     </td>
                                                     <td>
                                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('penyewa.destroy', $data->user_id) }}" method="POST">

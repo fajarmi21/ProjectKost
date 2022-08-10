@@ -45,23 +45,30 @@
                                                     <td>{{$data->created_at}}</td>
                                                     <td>
                                                         @if (!empty($data->bulan))
-                                                        {{Carbon\Carbon::now()->month($data->bulan)->isoFormat('MMMM')}}@else
-                                                        -
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @if ($data->status_bayar == 'Diterima' || $data->status_bayar == 'Menunggu Konfirmasi' || $data->status_bayar ==
-                                                        'Sudah Transfer')
-                                                        {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $data->tgl_bayar)->month($data->bulan)->format("d-m-Y")}}
+                                                        {{Carbon\Carbon::now()->month($data->bulan)->isoFormat('MMMM')}}
                                                         @else
                                                         -
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if ($data->status_bayar == 'Diterima' || $data->status_bayar == 'Menunggu Konfirmasi' || $data->status_bayar ==
-                                                        'Sudah Transfer')
+                                                        @php
+                                                        $bulan = explode(";", $data->bulan);
+                                                        @endphp
+                                                        @if ($data->status_bayar == 'Lunas' || $data->status_bayar ==
+                                                        'Belum Bayar' || $data->status_bayar ==
+                                                        'Menunggu Konfirmasi')
                                                         {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s",
-                                                        $data->tgl_bayar)->month($data->bulan)->addMonth(1)->format("d-m-Y")}}
+                                                        $data->tgl_bayar)->month($bulan[0])->year($bulan[1])->format("d-m-Y")}}
+                                                        @else
+                                                        -
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($data->status_bayar == 'Lunas' || $data->status_bayar ==
+                                                        'Belum Bayar' || $data->status_bayar ==
+                                                        'Menunggu Konfirmasi')
+                                                        {{ Carbon\Carbon::createFromFormat("Y-m-d H:i:s",
+                                                        $data->tgl_bayar)->month($bulan[0])->year($bulan[1])->addMonth(1)->format("d-m-Y")}}
                                                         @else
                                                         -
                                                         @endif
@@ -70,7 +77,7 @@
                                                     <td>
                                                         <a href="/pembayaran/{{$data->id}}" class="btn btn-info"><i
                                                                 class=" fas fa-file"></i> Detail</a>
-                                                        @if($data->status_bayar != 'Diterima')
+                                                        @if($data->status_bayar != 'Lunas' && $data->status_bayar != 'Ditolak')
                                                         <button type="button" class="btn btn-primary"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modal-default{{ $data->id }}">
@@ -86,26 +93,33 @@
                                                                             data-bs-dismiss="modal"
                                                                             aria-label="Close"></button>
                                                                     </div>
-                                                                    <div class="modal-body">
-                                                                        <img src="{{url('/images')}}/{{$data->bukti}}"
-                                                                            class="img-fluid" alt="">
-                                                                    </div>
-                                                                    <div class="modal-footer justify-content-between">
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                            data-bs-dismiss="modal">Tutup</button>
-                                                                        <form
-                                                                            action="{{ route('admin.konfirmasi', $data->id) }}"
-                                                                            method="POST" enctype="multipart/form-data">
-                                                                            @csrf
-                                                                            <input type="hidden" name="bulan" value="{{ $data->bulan }}">
+                                                                    <form
+                                                                        action="{{ route('admin.konfirmasi', $data->id) }}"
+                                                                        method="POST" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        <div class="modal-body">
+                                                                            <img src="{{url('/images')}}/{{$data->bukti}}"
+                                                                                class="img-fluid" alt="">
+                                                                            <br>
+                                                                            <Textarea name="keterangan"
+                                                                                placeholder="Keterangan"
+                                                                                class="form-control"></Textarea>
+                                                                        </div>
+                                                                        <div
+                                                                            class="modal-footer justify-content-between">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Tutup</button>
+                                                                            <input type="hidden" name="bulan"
+                                                                                value="{{ $data->bulan }}">
                                                                             <button type="submit" id="status"
                                                                                 name="status" value="Ditolak"
                                                                                 class="btn btn-danger">Tolak</button>
                                                                             <button type="submit" id="status"
-                                                                                name="status" value="Diterima"
+                                                                                name="status" value="Lunas"
                                                                                 class="btn btn-success">Konfirmasi</button>
-                                                                        </form>
-                                                                    </div>
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
                                                                 <!-- /.modal-content -->
                                                             </div>

@@ -39,7 +39,7 @@
                                                 <tr>
                                                     <th scope='row'>{{$no}}</th>
                                                     <td>{{$data->nama_penyewa}}</td>
-                                                    <td>{{$data->tgl_booking}}</td>
+                                                    <td>{{Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $data->tgl_booking)->format("d-m-Y")}}</td>
                                                     <td>{{$data->status_bayar}}</td>
                                                     <td>
                                                         <a href="{{ route('booking.show', $data->id)}}" class="btn btn-info"><i class=" fas fa-plus"></i>Detail</a>

@@ -132,6 +132,14 @@
                                                 <blockquote class="m-b-25">
                                                     <p>Selamat booking Anda telah diproses, silahkan tunggu konfirmasi dari admin. Ada dapat melihat status pembayaran <a href="/pembayaran">disini</a></p>
                                                 </blockquote>
+                                            @elseif($pembayaran->status_bayar == 'Menunggu Konfirmasi')
+                                                <blockquote class="m-b-25">
+                                                    <p>Selamat Pembayaran Anda telah diproses, silahkan tunggu konfirmasi dari admin. Ada dapat melihat status pembayaran <a href="/pembayaran">disini</a></p>
+                                                </blockquote>
+                                            @elseif($pembayaran->status_bayar == 'Belum Bayar')
+                                                <blockquote class="m-b-25">
+                                                    <p>Silahkan unggah bukti pembayaran <a href="/pembayaran">disini</a>, agar dapat segera diproses oleh admin</p>
+                                                </blockquote>
                                             @elseif ($pembayaran->status_bayar == 'Booking')
                                             <div id="countdown1"></div>
                                             @else
@@ -527,7 +535,7 @@
 
     function CountDownTimer(dt, id) {
         var end = new Date(dt);
-        var timeEnd = new Date('{{ Carbon\Carbon::now()->month($time->bulan)->addMonth(1)->toDateString() }}');
+        var timeEnd = new Date('{{ Carbon\Carbon::now()->month(explode(";", $time->bulan)[0])->year(explode(";", $time->bulan)[1])->addMonth(1)->toDateString() }}');
         var _second = 1000;
         var _minute = _second * 60;
         var _hour = _minute * 60;

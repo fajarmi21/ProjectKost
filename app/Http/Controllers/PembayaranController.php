@@ -26,13 +26,12 @@ class PembayaranController extends Controller
             $pembayaran = Pembayaran::where('user_id', Auth::user()->id)
                 ->Where('status_bayar', '!=', 'Diterima(Booking)')->get();
             $ids = Pembayaran::where('user_id', Auth::user()->id)->latest('tenggat')->latest()->limit(1)->first();
-            // dd($ids);
             return view('pembayaran.index', compact('pembayaran', 'ids'));
         } elseif (Auth::user()->role_id == '1') {
-            $pembayaran = Pembayaran::where('status_bayar', 'Diterima')
-                ->orWhere('status_bayar', 'Sudah Transfer')
+            $pembayaran = Pembayaran::where('status_bayar', 'Lunas')
+                ->orWhere('status_bayar', 'Menunggu Konfirmasi')
                 ->orwhere('status_bayar', 'Ditolak')
-                ->orwhere('status_bayar', 'Menunggu Konfirmasi')->get();
+                ->orwhere('status_bayar', 'Belum Bayar')->get();
             return view('pembayarans.index', ['pembayaran' => $pembayaran]);
         }
     }
@@ -117,9 +116,9 @@ class PembayaranController extends Controller
             $pembayaran->nama_penyewa = $request->nama_penyewa;
             $pembayaran->tgl_masuk = $request->tgl_masuk;
             $pembayaran->tgl_booking = $request->tgl_booking;
-            $pembayaran->status_bayar = "Menunggu Konfirmasi";
+            $pembayaran->status_bayar = "Belum Bayar";
             $pembayaran->tgl_bayar = Carbon::now()->toDateTimeString();
-            $pembayaran->bulan = Carbon::now()->addMonth($i)->isoFormat('MM');
+            $pembayaran->bulan = Carbon::now()->addMonth($i)->month . ";" . Carbon::now()->addMonth($i)->year;
             $pembayaran->save();
             foreach ($fas as $key => $value) {
                 if ($value != "0") {
@@ -138,13 +137,13 @@ class PembayaranController extends Controller
         //     $pembayaran->nama_penyewa = $request->nama_penyewa;
         //     $pembayaran->tgl_masuk = $request->tgl_masuk;
         //     $pembayaran->tgl_booking = $request->tgl_booking;
-        //     $pembayaran->status_bayar = "Menunggu Konfirmasi";
+        //     $pembayaran->status_bayar = "Belum Bayar";
         //     $pembayaran->tgl_bayar = Carbon::now()->toDateString();
         //     $pembayaran->save();
         //     $pembayaran->id;
         // } else {
         //     $ids = Pembayaran::insertGetId($request->except(['fas_id', '_token', 'tenggat', 'bukti', 'tgl_bayar']) + [
-        //         'status_bayar' => 'Menunggu Konfirmasi',
+        //         'status_bayar' => 'Belum Bayar',
         //         'tgl_bayar' => Carbon::now()->toDateString(),
         //         'created_at' => Carbon::now()->toDateTimeString()
         //     ]);
@@ -156,7 +155,7 @@ class PembayaranController extends Controller
         //     }
         // }
         // dd('x');
-        $pembayaran = Pembayaran::where(['user_id' => $request->user_id, 'status_bayar' => 'Menunggu Konfirmasi'])->groupBy('user_id')->select('pembayaran.*', DB::raw('group_concat(pembayaran.bulan) as bulan'))->first();
+        $pembayaran = Pembayaran::where(['user_id' => $request->user_id, 'status_bayar' => 'Belum Bayar'])->groupBy('user_id')->select('pembayaran.*', DB::raw('group_concat(pembayaran.bulan) as bulan'))->first();
         return redirect()->route('pembayaran.showBln', ['id' => $pembayaran, 'bln' => $request->mp])->with('toast_success', 'Segera Lakukan Pembayaran!!');
     }
 
@@ -176,7 +175,7 @@ class PembayaranController extends Controller
                     ->selectRaw('substring_index(group_concat(pembayaran.id SEPARATOR ", "), ", ", ?) as id', [$bln])
                     ->selectRaw('substring_index(group_concat(pembayaran.bulan SEPARATOR ", "), ", ", ?) as bulan', [$bln])
                     ->join('kost', 'kost.id', '=', 'pembayaran.kost_id')
-                    ->where('status_bayar', 'Menunggu Konfirmasi')
+                    ->where('status_bayar', 'Belum Bayar')
                     ->where('user_id', $cek->user_id)
                     ->first();
                 // dd($pembayaran);
@@ -266,7 +265,8 @@ class PembayaranController extends Controller
         if ($request->status == 'Ditolak') {
             Pembayaran::where('id', $id)
                 ->update([
-                    'status_bayar' => $request->status
+                    'status_bayar' => $request->status,
+                    'keterangan' => $request->keterangan
                 ]);
             return redirect('/pembayaran')->with('toast_danger', 'Pembayaran Ditolak!');
         } elseif ($request->status == 'Diterima(Booking)') {
@@ -287,8 +287,7 @@ class PembayaranController extends Controller
                 ->update([
                     'status_bayar' => $request->status,
                     'tgl_bayar' => $tgl_bayar->toDateTimeString(),
-                    // 'bulan' => $tgl_bayar->isoFormat('MMMM'),
-                    'tenggat' => $tgl_bayar->month($request->bulan)->addMonth()->toDateTimeString()
+                    'tenggat' => $tgl_bayar->month(explode(';', $request->bulan)[0])->year(explode(';', $request->bulan)[1])->addMonth()->toDateTimeString()
                 ]);
             return redirect('/pembayaran')->with('toast_success', 'Pembayaran Diterima!');
         }

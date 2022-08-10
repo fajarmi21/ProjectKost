@@ -73,6 +73,7 @@ class BookingController extends Controller
             $pembayaran->tgl_booking = Carbon::now()->createFromFormat('Y-m-d', $request->tgl_booking)->toDateTimeString();
             $pembayaran->status_bayar = $request->status_bayar;
             $pembayaran->tgl_bayar = Carbon::now()->createFromFormat('Y-m-d', $request->tgl_booking)->toDateTimeString();
+            $pembayaran->bulan = Carbon::now()->month . ";" . Carbon::now()->year;
             $pembayaran->save();
             $pembayaran->id;
         } else {

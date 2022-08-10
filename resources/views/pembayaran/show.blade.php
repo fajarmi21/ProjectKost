@@ -28,14 +28,14 @@
                                 @endphp
                                 @foreach(explode(',', $pembayaran->bulan) as $bln)
                                 @if ($no == $count)
-                                {{Carbon\Carbon::now()->month($bln)->isoFormat('MMMM')}}
+                                {{Carbon\Carbon::now()->month(explode(';', $bln)[0])->isoFormat('MMMM')}} {{Carbon\Carbon::now()->year(explode(';', $bln)[1])->year}}
                                 @else
-                                {{Carbon\Carbon::now()->month($bln)->isoFormat('MMMM')}} ,
+                                {{Carbon\Carbon::now()->month(explode(';', $bln)[0])->isoFormat('MMMM')}} {{Carbon\Carbon::now()->year(explode(';', $bln)[1])->year}} ,
                                 @php $no++ @endphp
                                 @endif
                                 @endforeach
                             @else
-                                {{Carbon\Carbon::now()->month($pembayaran->bulan)->isoFormat('MMMM')}}
+                                {{Carbon\Carbon::now()->month(explode(';', $pembayaran->bulan)[0])->isoFormat('MMMM')}} {{Carbon\Carbon::now()->year(explode(';', $pembayaran->bulan)[1])->year}}
                             @endif
                         </p>
                         <p style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #d5dadb;"><b>Status: </b>{{$pembayaran->status_bayar}}</p>

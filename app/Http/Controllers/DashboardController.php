@@ -19,7 +19,7 @@ class DashboardController extends Controller
         // Carbon::useMonthsOverflow(false);
         if (Auth::user()->role_id == '6') {
             $pembayaran = Pembayaran::where('user_id', Auth::user()->id)
-            ->whereNotIn('status_bayar', ['Menunggu Konfirmasi', 'Sudah Transfer'])
+            ->whereNotIn('status_bayar', ['Ditolak'])
             ->orderBy('id', 'DESC')
             ->first();
             $time = Pembayaran::where('user_id', Auth::user()->id)->select('bulan', 'tgl_bayar')->orderBy('id', 'DESC')->limit(1)->first();

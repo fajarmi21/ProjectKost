@@ -25,9 +25,10 @@
                                 <div class="tab-content">
                                     <div class="table-responsive">
                                         @if ($ids->status_bayar == "Diterima(Booking)")
-                                            <a href="{{ route('pembayaran.create', $ids->id)}}" class="btn btn-success btn-pill mb-3">Tambah Pembayaran</a>
+                                        <a href="{{ route('pembayaran.create', $ids->id)}}"
+                                            class="btn btn-success btn-pill mb-3">Tambah Pembayaran</a>
                                         @else
-                                            <div id="countdown"></div>
+                                        <div id="countdown"></div>
                                         @endif
                                         <table id="example" class="table table-striped">
                                             <thead>
@@ -45,38 +46,55 @@
                                                 @foreach($pembayaran as $data)
                                                 @php $no++; @endphp
                                                 <tr>
-                                                    <th scope='row'>{{$no}}</th>
+                                                    <td scope='row'>{{$no}}</td>
                                                     <td>
-                                                        @if ($data->status_bayar == 'Diterima' || $data->status_bayar == 'Menunggu Konfirmasi' || $data->status_bayar == 'Sudah Transfer')
-                                                            {{Carbon\Carbon::now()->month($data->bulan)->isoFormat('MMMM')}}
+                                                        @php
+                                                            $bulan = explode(";", $data->bulan);
+                                                        @endphp
+                                                        @if ($data->status_bayar == 'Lunas' || $data->status_bayar ==
+                                                        'Belum Bayar' || $data->status_bayar == 'Menunggu Konfirmasi' ||
+                                                        $data->status_bayar == 'Sudah Transfer(Booking)' || $data->status_bayar == 'Booking')
+                                                        {{Carbon\Carbon::now()->month($bulan[0])->isoFormat('MMMM')}}
                                                         @else
-                                                            -
+                                                        -
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if ($data->status_bayar == 'Diterima' || $data->status_bayar == 'Menunggu Konfirmasi' || $data->status_bayar == 'Sudah Transfer')
-                                                            {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $data->tgl_bayar)->month($data->bulan)->format("d-m-Y")}}
+                                                        @if ($data->status_bayar == 'Lunas' || $data->status_bayar ==
+                                                        'Belum Bayar' || $data->status_bayar == 'Menunggu Konfirmasi'||
+                                                        $data->status_bayar == 'Sudah Transfer(Booking)' || $data->status_bayar == 'Booking')
+                                                            {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s",
+                                                            $data->tgl_bayar)->month($bulan[0])->year($bulan[1])->format("d-m-Y")}}
                                                         @else
-                                                            -
+                                                        -
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if ($data->status_bayar == 'Diterima' || $data->status_bayar == 'Menunggu Konfirmasi' || $data->status_bayar == 'Sudah Transfer')
-                                                            {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $data->tgl_bayar)->month($data->bulan)->addMonth(1)->format("d-m-Y")}}
+                                                        @if ($data->status_bayar == 'Lunas' || $data->status_bayar ==
+                                                        'Belum Bayar' || $data->status_bayar == 'Menunggu Konfirmasi')
+                                                            {{ Carbon\Carbon::createFromFormat("Y-m-d H:i:s",
+                                                            $data->tgl_bayar)->month($bulan[0])->year($bulan[1])->addMonth(1)->format("d-m-Y")}}
+                                                        @elseif($data->status_bayar == 'Booking')
+                                                            {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s",
+                                                            $data->tgl_bayar)->month($bulan[0])->year($bulan[1])->addDay(1)->format("d-m-Y")}}
                                                         @else
-                                                            -
+                                                        -
                                                         @endif
                                                     </td>
                                                     <td>{{$data->status_bayar}}</td>
                                                     <td>
                                                         @if (status($data->status_bayar))
-                                                        <a href="/pembayaran/{{$data->id}}" class="btn btn-primary mb-3"><i class=" fas fa-file"></i> Detail</a>
+                                                        <a href="/pembayaran/{{$data->id}}"
+                                                            class="btn btn-primary mb-3"><i class=" fas fa-file"></i>
+                                                            Detail</a>
                                                         @else
-                                                        <a href="/booking/{{$data->id}}" class="btn btn-primary mb-3"><i class=" fas fa-file"></i> Detail</a>
+                                                        <a href="/booking/{{$data->id}}" class="btn btn-primary mb-3"><i
+                                                                class=" fas fa-file"></i> Detail</a>
                                                         @endif
                                                         @if ($data->status_bayar == "Diterima")
                                                         <a href="/notapembayaran/{{$data->id}}">
-                                                            <button class="btn btn-danger mb-3"><i class=" fas fa-print"></i> Nota Pembayaran</button>
+                                                            <button class="btn btn-danger mb-3"><i
+                                                                    class=" fas fa-print"></i> Nota Pembayaran</button>
                                                         </a>
                                                         @endif
                                                     </td>
@@ -95,10 +113,10 @@
     </section>
 </main>
 
-    @endsection
-    @section('script')
-    <script>
-        CountDownTimer('{{$ids->tgl_bayar}}', 'countdown');
+@endsection
+@section('script')
+<script>
+    CountDownTimer('{{$ids->tgl_bayar}}', 'countdown');
         function CountDownTimer(dt, id)
         {
             var end = new Date('{{$ids->tenggat}}');
@@ -120,5 +138,5 @@
             }
             timer = setInterval(showRemaining, 1000);
         }
-    </script>
-    @endsection
+</script>
+@endsection

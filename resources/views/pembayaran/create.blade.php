@@ -54,8 +54,7 @@
                                                     type="hidden">
                                             </div>
                                             <div class="position-relative form-group mt-4 entry-content">
-                                                <label for="bulan" style="font-weight: bold;">Ajukan Sewa Per
-                                                    Bulan</label>
+                                                <label for="bulan" style="font-weight: bold;">Silahkan masukkan berapa bulan ingin menyewa kamar</label>
                                                 <div class="input-group mb-3">
                                                     <input name="bulan" id="bulan" type="number" min="1"
                                                         class="form-control" value="1" onchange="Maxim(this.value)">
@@ -65,8 +64,7 @@
                                                 <input id="subtotal" value="{{ $pembayaran->kharga }}" class="form-control" readonly type="hidden">
                                             </div>
                                             <div>
-                                                <label for="fas" style="font-weight: bold;">Fasilitas Tambahan untuk Per
-                                                    Bulan</label>
+                                                <label for="fas" style="font-weight: bold;">Silahkan masukkan berapa bulan ingin menyewa fasilitas tambahan</label>
                                                 @foreach ($fasilitas as $item)
                                                 <div class="input-group mb-3">
                                                     <span class="input-group-text">{{$item->fasilitas}}</span>
