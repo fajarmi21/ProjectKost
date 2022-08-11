@@ -53,7 +53,7 @@
                                                         @endphp
                                                         @if ($data->status_bayar == 'Lunas' || $data->status_bayar ==
                                                         'Belum Bayar' || $data->status_bayar == 'Menunggu Konfirmasi' ||
-                                                        $data->status_bayar == 'Sudah Transfer(Booking)' || $data->status_bayar == 'Booking')
+                                                        $data->status_bayar == 'Sudah Transfer(Booking)')
                                                         {{Carbon\Carbon::now()->month($bulan[0])->isoFormat('MMMM')}}
                                                         @else
                                                         -
@@ -62,7 +62,7 @@
                                                     <td>
                                                         @if ($data->status_bayar == 'Lunas' || $data->status_bayar ==
                                                         'Belum Bayar' || $data->status_bayar == 'Menunggu Konfirmasi'||
-                                                        $data->status_bayar == 'Sudah Transfer(Booking)' || $data->status_bayar == 'Booking')
+                                                        $data->status_bayar == 'Sudah Transfer(Booking)')
                                                             {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s",
                                                             $data->tgl_bayar)->month($bulan[0])->year($bulan[1])->format("d-m-Y")}}
                                                         @else
@@ -74,9 +74,6 @@
                                                         'Belum Bayar' || $data->status_bayar == 'Menunggu Konfirmasi')
                                                             {{ Carbon\Carbon::createFromFormat("Y-m-d H:i:s",
                                                             $data->tgl_bayar)->month($bulan[0])->year($bulan[1])->addMonth(1)->format("d-m-Y")}}
-                                                        @elseif($data->status_bayar == 'Booking')
-                                                            {{Carbon\Carbon::createFromFormat("Y-m-d H:i:s",
-                                                            $data->tgl_bayar)->month($bulan[0])->year($bulan[1])->addDay(1)->format("d-m-Y")}}
                                                         @else
                                                         -
                                                         @endif
