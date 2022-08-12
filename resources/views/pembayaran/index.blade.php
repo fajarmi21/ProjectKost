@@ -88,7 +88,7 @@
                                                         <a href="/booking/{{$data->id}}" class="btn btn-primary mb-3"><i
                                                                 class=" fas fa-file"></i> Detail</a>
                                                         @endif
-                                                        @if ($data->status_bayar == "Diterima")
+                                                        @if ($data->status_bayar == "Lunas")
                                                         <a href="/notapembayaran/{{$data->id}}">
                                                             <button class="btn btn-danger mb-3"><i
                                                                     class=" fas fa-print"></i> Nota Pembayaran</button>
